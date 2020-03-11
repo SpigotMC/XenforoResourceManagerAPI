@@ -83,7 +83,7 @@ class API {
 
     private function getResource($resource_id) {
         $resource = $this->database->getResource($resource_id);
-        if (!is_null($resource)) {
+        if (!is_null($resource) && $resource !== false) {
             return new Obj\Resource($resource);
         }
 
@@ -104,7 +104,7 @@ class API {
 
     private function getAuthor($author_id) {
         $author = $this->database->getUser($author_id);
-        if (!is_null($author)) {
+        if (!is_null($author) && $author !== false) {
             return new Obj\Author($author);
         }
 
