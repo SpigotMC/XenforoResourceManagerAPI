@@ -14,7 +14,7 @@ class Author {
 
         $this->avatar = array(
             'info' => $author['avatar_date'],
-            'hash' => strtolower(md5(strtolower(trim($author['gravatar']))))
+            'hash' => empty($author['gravatar']) ? '' : strtolower(md5(strtolower(trim($author['gravatar']))))
         );
     }
 }
