@@ -31,8 +31,8 @@ class XenforoDatabaseAccessor {
 
     public function getResource($resource_id) {
         if (!is_null($this->conn)) {
-            $stmt = $this->conn->prepare($this->_selectAll('resource', 'WHERE resource_id = ? LIMIT 1'));
-            $stmt->bindParam(1, $resource_id);
+            $stmt = $this->conn->prepare($this->_selectAll('resource', 'WHERE resource_id = :resource_id LIMIT 1'));
+            $stmt->bindParam(':resource_id', $resource_id);
             if ($stmt->execute()) {
                 return $stmt->fetch();
             }
