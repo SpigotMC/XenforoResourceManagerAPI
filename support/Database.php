@@ -2,6 +2,9 @@
 defined('_XFRM_API') or exit('No direct script access allowed here.');
 
 class XenforoDatabaseAccessor {
+    private static $resourceColumns = array('resource_id', 'title', 'tag_line', 'user_id', 'username', 'price', 'currency', 'download_count', 'update_count', 'review_count', 'rating_count', 'rating_sum', 'rating_avg', 'rating_weighted');
+    private static $userColumns = array('user_id', 'username', 'resource_count', 'avatar_date', 'gravatar');
+
     private $prefix;
     private $conn;
 
@@ -31,7 +34,7 @@ class XenforoDatabaseAccessor {
 
     public function getResource($resource_id) {
         if (!is_null($this->conn)) {
-            $stmt = $this->conn->prepare($this->_selectAll('resource', 'WHERE resource_id = :resource_id LIMIT 1'));
+            $stmt = $this->conn->prepare($this->_select(XenforoDatabaseAccessor::$resourceColumns, 'resource', 'WHERE resource_id = :resource_id LIMIT 1'));
             $stmt->bindParam(':resource_id', $resource_id);
             if ($stmt->execute()) {
                 return $stmt->fetch();
@@ -43,7 +46,7 @@ class XenforoDatabaseAccessor {
 
     public function getResourcesByUser($user_id) {
         if (!is_null($this->conn)) {
-            $stmt = $this->conn->prepare($this->_selectAll('resource', 'WHERE user_id = :user_id'));
+            $stmt = $this->conn->prepare($this->_select(XenforoDatabaseAccessor::$resourceColumns, 'resource', 'WHERE user_id = :user_id'));
             $stmt->bindParam(':user_id', $user_id);
             if ($stmt->execute()) {
                 return $stmt->fetchAll();
@@ -55,7 +58,7 @@ class XenforoDatabaseAccessor {
 
     public function getUser($user_id) {
         if (!is_null($this->conn)) {
-            $stmt = $this->conn->prepare($this->_select('user_id, username, resource_count, avatar_date, gravatar', 'user', 'WHERE user_id = :user_id LIMIT 1'));
+            $stmt = $this->conn->prepare($this->_select(XenforoDatabaseAccessor::$userColumns, 'user', 'WHERE user_id = :user_id LIMIT 1'));
             $stmt->bindParam(':user_id', $user_id);
             if ($stmt->execute()) {
                 return $stmt->fetch();
@@ -65,11 +68,7 @@ class XenforoDatabaseAccessor {
         return NULL;
     }
 
-    private function _selectAll($table, $query) {
-        return $this->_select('*', $table, $query);
-    }
-
     private function _select($what, $table, $query) {
-        return sprintf('SELECT %s FROM %s%s %s', $what, $this->prefix, $table, $query);
+        return sprintf('SELECT %s FROM %s%s %s', implode(",", $what), $this->prefix, $table, $query);
     }
 }
