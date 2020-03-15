@@ -28,12 +28,7 @@ class Resource {
             'downloads' => $resource['download_count'],
             'updates' => $resource['update_count'],
             'reviews' => $resource['review_count'],
-            'rating' => array(
-                'count' => $resource['rating_count'],
-                'sum' => $resource['rating_sum'],
-                'avg' => $resource['rating_avg'],
-                'weighted' => $resource['rating_weighted']
-            )
+            'rating' => $resource['rating_weighted']
         );
     }
 }
