@@ -72,6 +72,9 @@ class API {
                 return;
         }
 
+        // Successfully executed the query, cache whether exists or not
+        header("Cache-Control: public, max-age=21600");
+
         $packed = new Obj\JsonResponse($response);
         if ($packed->isHoldingNull()) {
             echo new Obj\Error(404, "The requested data could not be located.");
