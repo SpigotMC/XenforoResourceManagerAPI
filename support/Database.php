@@ -2,7 +2,7 @@
 defined('_XFRM_API') or exit('No direct script access allowed here.');
 
 class XenforoDatabaseAccessor {
-    private static $resourceColumns = array('resource_id', 'title', 'tag_line', 'user_id', 'username', 'price', 'currency', 'download_count', 'update_count', 'review_count', 'rating_weighted');
+    private static $resourceColumns = array('resource_id', 'title', 'tag_line', 'user_id', 'username', 'price', 'currency', 'download_count', 'update_count', 'review_count', 'rating_avg');
     private static $userColumns = array('user_id', 'username', 'resource_count', 'avatar_date', 'gravatar');
 
     private $prefix;
