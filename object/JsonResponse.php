@@ -10,7 +10,7 @@ class JsonResponse {
 
     public function __toString() {
         try {
-            return json_encode($this->data);
+            return json_encode($this->data) . "\n";
         } catch (\Exception $ignored) {
             return '';
         }
