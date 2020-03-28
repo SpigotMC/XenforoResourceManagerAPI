@@ -5,6 +5,7 @@ class Resource {
     public $id;
     public $title;
     public $tag;
+    public $current_version;
     public $author;
     public $premium;
     public $stats;
@@ -13,6 +14,7 @@ class Resource {
         $this->id = $resource['resource_id'];
         $this->title = $resource['title'];
         $this->tag = $resource['tag_line'];
+        $this->current_version = $resource['version_string'];
         
         $this->author = array(
             'id' => $resource['user_id'],
