@@ -34,7 +34,7 @@ class XenforoDatabaseAccessor {
 
     public function getResource($resource_id) {
         if (!is_null($this->conn)) {
-            $stmt = $this->conn->prepare($this->_select(XenforoDatabaseAccessor::$resourceColumns, 'resource', 'WHERE resource_id = :resource_id AND resource_state = "visible" LIMIT 1'));
+            $stmt = $this->conn->prepare($this->_resource('WHERE r.resource_id = :resource_id AND r.resource_state = "visible" LIMIT 1'));
             $stmt->bindParam(':resource_id', $resource_id);
             if ($stmt->execute()) {
                 return $stmt->fetch();
@@ -46,7 +46,7 @@ class XenforoDatabaseAccessor {
 
     public function getResourcesByUser($user_id) {
         if (!is_null($this->conn)) {
-            $stmt = $this->conn->prepare($this->_select(XenforoDatabaseAccessor::$resourceColumns, 'resource', 'WHERE user_id = :user_id AND resource_state = "visible"'));
+            $stmt = $this->conn->prepare($this->_resource('WHERE r.user_id = :user_id AND r.resource_state = "visible'));
             $stmt->bindParam(':user_id', $user_id);
             if ($stmt->execute()) {
                 return $stmt->fetchAll();
@@ -66,6 +66,17 @@ class XenforoDatabaseAccessor {
         }
 
         return NULL;
+    }
+
+    private function _resource($suffix) {
+        return sprintf(
+            "SELECT r.resource_id, r.title, r.tag_line, r.user_id, r.username, r.price, r.currency, r.download_count, r.update_count, r.review_count, r.rating_avg, rv.version_string
+            FROM xf_resource r
+                INNER JOIN xf_resource_version rv 
+                    ON r.current_version_id = rv.resource_version_id 
+            %s",
+            $suffix
+        );
     }
 
     private function _select($what, $table, $query) {
