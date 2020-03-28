@@ -3,7 +3,6 @@ defined('_XFRM_API') or exit('No direct script access allowed here.');
 
 class XenforoDatabaseAccessor {
     private static $resourceColumns = array('resource_id', 'title', 'tag_line', 'user_id', 'username', 'price', 'currency', 'download_count', 'update_count', 'review_count', 'rating_avg');
-    private static $userColumns = array('user_id', 'username', 'resource_count', 'avatar_date', 'gravatar');
 
     private $prefix;
     private $conn;
@@ -58,7 +57,22 @@ class XenforoDatabaseAccessor {
 
     public function getUser($user_id) {
         if (!is_null($this->conn)) {
-            $stmt = $this->conn->prepare($this->_select(XenforoDatabaseAccessor::$userColumns, 'user', 'WHERE user_id = :user_id LIMIT 1'));
+            $stmt = $this->conn->prepare(
+                "SELECT u.user_id, u.username, u.resource_count, u.avatar_date, u.gravatar, GROUP_CONCAT(uf.field_id) AS identity_key, GROUP_CONCAT(ufv.field_value) AS identity_val
+                FROM xf_user u
+                    INNER JOIN xf_user_field_value ufv
+                        ON ufv.user_id = u.user_id
+                    INNER JOIN xf_user_field uf
+                        ON ufv.field_id = uf.field_id
+                WHERE uf.display_group = 'contact'
+                  AND ufv.user_id = :user_id
+                  AND (
+                      ufv.field_value IS NOT NULL
+                          AND
+                      ufv.field_value <> ''
+                    )
+                GROUP BY user_id"
+            );
             $stmt->bindParam(':user_id', $user_id);
             if ($stmt->execute()) {
                 return $stmt->fetch();
