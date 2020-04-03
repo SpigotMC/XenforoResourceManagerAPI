@@ -1,5 +1,4 @@
-##XenforoResourceManagerAPI
------
+## XenforoResourceManagerAPI
 This project aims to safely expose information from the [SpigotMC](https://spigotmc.org) website in a machine-readable format for use in projects and other systems.
 
 ### Current Capabilities
@@ -40,9 +39,9 @@ Here are examples of current capabilities:
 }
 ```
 
-### getResourcesByAuthor
-#### Request: https://api.spigotmc.org/simple/0.1/index.php?action=getResourcesByAuthor&id=1
-#### Response:
+#### getResourcesByAuthor
+##### Request: https://api.spigotmc.org/simple/0.1/index.php?action=getResourcesByAuthor&id=1
+##### Response (truncated):
 ```json
 [
   {
@@ -82,15 +81,13 @@ Here are examples of current capabilities:
       "reviews": "17",
       "rating": "4.41176"
     }
-  },
-  ...
+  }
 ]
 ```
-*Please note, results were truncated.*
 
-### getAuthor
-#### Request: https://api.spigotmc.org/simple/0.1/index.php?action=getAuthor&id=1
-#### Response:
+#### getAuthor
+##### Request: https://api.spigotmc.org/simple/0.1/index.php?action=getAuthor&id=1
+##### Response:
 ```json
 {
   "id": "1",
