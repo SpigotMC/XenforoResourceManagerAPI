@@ -8,7 +8,6 @@ class Config {
         'MYSQL_HOSTNAME' => 'localhost',
         'MYSQL_PORT' => 3306,
         'MYSQL_DATABASE' => 'database',
-        'MYSQL_PREFIX' => 'xf_',
         'PUBLIC_PATH' => 'http://localhost'
     );
 }

@@ -20,8 +20,7 @@ class API {
             Support\Config::$data['MYSQL_PASSWORD'],
             Support\Config::$data['MYSQL_HOSTNAME'],
             Support\Config::$data['MYSQL_PORT'],
-            Support\Config::$data['MYSQL_DATABASE'],
-            Support\Config::$data['MYSQL_PREFIX']
+            Support\Config::$data['MYSQL_DATABASE']
         );
     }
 
