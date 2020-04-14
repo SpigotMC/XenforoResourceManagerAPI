@@ -13,6 +13,7 @@ class Util {
             $iconUrl = Config::$data['PUBLIC_PATH'] . sprintf('data/resource_icons/%d/%d.jpg?%d', floor($resource_id / 1000), $resource_id, $icon_date);
         
         }
+        
         return Util::buildBase64($iconUrl);
     }
 
