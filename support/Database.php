@@ -33,11 +33,7 @@ class XenforoDatabaseAccessor {
 
     public function getResource($resource_id) {
         if (!is_null($this->conn)) {
-<<<<<<< HEAD
-            $stmt = $this->conn->prepare($this->_selectAll('resource', 'WHERE resource_id = :resource_id AND resource_state = "visible" LIMIT 1'));
-=======
             $stmt = $this->conn->prepare($this->_resource('WHERE r.resource_id = :resource_id AND r.resource_state = "visible" LIMIT 1'));
->>>>>>> d8d6480... add current resource version to resource response to facilitate update checking
             $stmt->bindParam(':resource_id', $resource_id);
             if ($stmt->execute()) {
                 return $stmt->fetch();
@@ -49,11 +45,7 @@ class XenforoDatabaseAccessor {
 
     public function getResourcesByUser($user_id) {
         if (!is_null($this->conn)) {
-<<<<<<< HEAD
-            $stmt = $this->conn->prepare($this->_selectAll('resource', 'WHERE user_id = :user_id AND resource_state = "visible"'));
-=======
             $stmt = $this->conn->prepare($this->_resource('WHERE r.user_id = :user_id AND r.resource_state = "visible'));
->>>>>>> d8d6480... add current resource version to resource response to facilitate update checking
             $stmt->bindParam(':user_id', $user_id);
             if ($stmt->execute()) {
                 return $stmt->fetchAll();
