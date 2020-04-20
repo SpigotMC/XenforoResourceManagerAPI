@@ -2,12 +2,9 @@
 defined('_XFRM_API') or exit('No direct script access allowed here.');
 
 class XenforoDatabaseAccessor {
-    private static $resourceColumns = array('resource_id', 'title', 'tag_line', 'user_id', 'username', 'price', 'currency', 'download_count', 'update_count', 'review_count', 'rating_avg');
-
-    private $prefix;
     private $conn;
 
-    public function __construct($username, $password, $hostname, $port, $database, $prefix) {
+    public function __construct($username, $password, $hostname, $port, $database) {
         try {
             $this->conn = new \PDO(
                 sprintf(
@@ -27,8 +24,6 @@ class XenforoDatabaseAccessor {
         } catch (\Exception $ignored) {
             $this->conn = NULL;
         }
-
-        $this->prefix = $prefix;
     }
 
     public function getResource($resource_id) {
@@ -45,7 +40,7 @@ class XenforoDatabaseAccessor {
 
     public function getResourcesByUser($user_id) {
         if (!is_null($this->conn)) {
-            $stmt = $this->conn->prepare($this->_resource('WHERE r.user_id = :user_id AND r.resource_state = "visible'));
+            $stmt = $this->conn->prepare($this->_resource('WHERE r.user_id = :user_id AND r.resource_state = "visible"'));
             $stmt->bindParam(':user_id', $user_id);
             if ($stmt->execute()) {
                 return $stmt->fetchAll();
@@ -71,7 +66,7 @@ class XenforoDatabaseAccessor {
                           AND
                       ufv.field_value <> ''
                     )
-                GROUP BY user_id"
+                GROUP BY u.user_id"
             );
             $stmt->bindParam(':user_id', $user_id);
             if ($stmt->execute()) {
@@ -91,9 +86,5 @@ class XenforoDatabaseAccessor {
             %s",
             $suffix
         );
-    }
-
-    private function _select($what, $table, $query) {
-        return sprintf('SELECT %s FROM %s%s %s', implode(",", $what), $this->prefix, $table, $query);
     }
 }

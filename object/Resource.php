@@ -15,12 +15,12 @@ class Resource {
         $this->title = $resource['title'];
         $this->tag = $resource['tag_line'];
         $this->current_version = $resource['version_string'];
-        
+
         $this->author = array(
             'id' => $resource['user_id'],
             'username' => $resource['username']
         );
-        
+
         $this->premium = array(
             'price' => $resource['price'],
             'currency' => $resource['currency']
