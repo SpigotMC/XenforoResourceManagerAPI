@@ -7,7 +7,6 @@ class Config {
         'MYSQL_PASSWORD' => 'root',
         'MYSQL_HOSTNAME' => 'localhost',
         'MYSQL_PORT' => 3306,
-        'MYSQL_DATABASE' => 'database',
-        'PUBLIC_PATH' => 'http://localhost'
+        'MYSQL_DATABASE' => 'database'
     );
 }
