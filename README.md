@@ -19,22 +19,23 @@ Here are examples of current capabilities:
 ##### Response:
 ```json
 {
-  "id": "201",
-  "title": "XenPermissions",
-  "tag": "Hook your permissions into Xenforo!",
+  "id": "2",
+  "title": "HubKick",
+  "tag": "Send players to lobby on kick. /lobby / hub",
+  "current_version": "1.7.1",
   "author": {
-    "id": "1",
-    "username": "md_5"
+    "id": "106",
+    "username": "LaxWasHere"
   },
   "premium": {
     "price": "0.00",
     "currency": ""
   },
   "stats": {
-    "downloads": "938",
-    "updates": "0",
-    "reviews": "4",
-    "rating": "4.5"
+    "downloads": "6387",
+    "updates": "22",
+    "reviews": "9",
+    "rating": "5"
   }
 }
 ```
@@ -48,6 +49,7 @@ Here are examples of current capabilities:
     "id": "201",
     "title": "XenPermissions",
     "tag": "Hook your permissions into Xenforo!",
+    "current_version": "2013-09-28",
     "author": {
       "id": "1",
       "username": "md_5"
@@ -57,7 +59,7 @@ Here are examples of current capabilities:
       "currency": ""
     },
     "stats": {
-      "downloads": "938",
+      "downloads": "939",
       "updates": "0",
       "reviews": "4",
       "rating": "4.5"
@@ -67,6 +69,7 @@ Here are examples of current capabilities:
     "id": "342",
     "title": "iTag",
     "tag": "Performant and Reliable TagAPI Replacement",
+    "current_version": "22",
     "author": {
       "id": "1",
       "username": "md_5"
@@ -76,7 +79,7 @@ Here are examples of current capabilities:
       "currency": ""
     },
     "stats": {
-      "downloads": "23521",
+      "downloads": "23573",
       "updates": "2",
       "reviews": "17",
       "rating": "4.41176"
@@ -93,6 +96,9 @@ Here are examples of current capabilities:
   "id": "1",
   "username": "md_5",
   "resource_count": "12",
+  "identities": {
+    "twitter": "md__5"
+  },
   "avatar": {
     "info": "1545025664",
     "hash": "b53fd878a84d268da2b6456e0b96cae5"
