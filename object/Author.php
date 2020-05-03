@@ -17,7 +17,10 @@ class Author {
         $identityKey = explode(",", $author['identity_key']);
         $identityVal = explode(",", $author['identity_val']);
         for ($idx = 0; $idx < count($identityKey) && $idx < count($identityVal); $idx++) {
-            $this->identities[$identityKey[$idx]] = $identityVal[$idx];
+            $value = $identityVal[$idx];
+            if (!empty($value)) {
+                $this->identities[$identityKey[$idx]] = $value;
+            }
         }
 
         $this->avatar = array(

@@ -59,13 +59,7 @@ class XenforoDatabaseAccessor {
                         ON ufv.user_id = u.user_id
                     INNER JOIN xf_user_field uf
                         ON ufv.field_id = uf.field_id
-                WHERE uf.display_group = 'contact'
-                  AND ufv.user_id = :user_id
-                  AND (
-                      ufv.field_value IS NOT NULL
-                          AND
-                      ufv.field_value <> ''
-                    )
+                WHERE uf.display_group = 'contact' AND ufv.user_id = :user_id
                 GROUP BY u.user_id"
             );
             $stmt->bindParam(':user_id', $user_id);
