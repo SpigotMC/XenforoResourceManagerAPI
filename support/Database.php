@@ -53,7 +53,7 @@ class XenforoDatabaseAccessor {
     public function getUser($user_id) {
         if (!is_null($this->conn)) {
             $stmt = $this->conn->prepare(
-                "SELECT u.user_id, u.username, u.resource_count, u.avatar_date, u.gravatar, GROUP_CONCAT(uf.field_id) AS identity_key, GROUP_CONCAT(ufv.field_value) AS identity_val
+                "SELECT u.user_id, u.username, u.resource_count, u.avatar_date, u.gravatar, GROUP_CONCAT(uf.field_id SEPARATOR '\n') AS identity_key, GROUP_CONCAT(ufv.field_value SEPARATOR '\n') AS identity_val
                 FROM xf_user u
                     INNER JOIN xf_user_field_value ufv
                         ON ufv.user_id = u.user_id
