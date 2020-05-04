@@ -14,8 +14,8 @@ class Author {
         $this->resource_count = $author['resource_count'];
 
         $this->identities = array();
-        $identityKey = explode(",", $author['identity_key']);
-        $identityVal = explode(",", $author['identity_val']);
+        $identityKey = explode("\n", $author['identity_key']);
+        $identityVal = explode("\n", $author['identity_val']);
         for ($idx = 0; $idx < count($identityKey) && $idx < count($identityVal); $idx++) {
             $value = $identityVal[$idx];
             if (!empty($value)) {
