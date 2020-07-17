@@ -23,6 +23,10 @@ class Author {
             }
         }
 
+        if (empty($this->identities)) {
+            $this->identities = new \stdClass();
+        }
+
         $this->avatar = array(
             'info' => $author['avatar_date'],
             'hash' => empty($author['gravatar']) ? '' : strtolower(md5(strtolower(trim($author['gravatar']))))
