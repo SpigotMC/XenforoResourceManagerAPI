@@ -55,11 +55,11 @@ class XenforoDatabaseAccessor {
             $stmt = $this->conn->prepare(
                 "SELECT u.user_id, u.username, u.resource_count, u.avatar_date, u.gravatar, GROUP_CONCAT(uf.field_id SEPARATOR '\n') AS identity_key, GROUP_CONCAT(ufv.field_value SEPARATOR '\n') AS identity_val
                 FROM xf_user u
-                    INNER JOIN xf_user_field_value ufv
+                    LEFT JOIN xf_user_field_value ufv
                         ON ufv.user_id = u.user_id
-                    INNER JOIN xf_user_field uf
-                        ON ufv.field_id = uf.field_id
-                WHERE uf.display_group = 'contact' AND ufv.user_id = :user_id
+                    LEFT JOIN xf_user_field uf
+                        ON ufv.field_id = uf.field_id AND uf.display_group = 'contact'
+                WHERE u.user_id = :user_id
                 GROUP BY u.user_id"
             );
             $stmt->bindParam(':user_id', $user_id);
