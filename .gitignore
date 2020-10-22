@@ -1,0 +1,8 @@
+# We don't want to link the symlink you make for dev stuff. That will be wonky. Just no.
+/docker/www
+
+# Ignore your personal logs
+/docker/logs/*
+
+# Keep logs folder tho
+!.gitkeep
