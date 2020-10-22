@@ -8,18 +8,18 @@ class Author {
     public $identities;
     public $avatar;
 
-    public function __construct($author) {
+    public function __construct($payload) {
+        $author = $payload->user;
+        $identities = $payload->ident;
+
         $this->id = $author['user_id'];
         $this->username = $author['username'];
         $this->resource_count = $author['resource_count'];
 
         $this->identities = array();
-        $identityKey = explode("\n", $author['identity_key']);
-        $identityVal = explode("\n", $author['identity_val']);
-        for ($idx = 0; $idx < count($identityKey) && $idx < count($identityVal); $idx++) {
-            $value = $identityVal[$idx];
-            if (!empty($value)) {
-                $this->identities[$identityKey[$idx]] = $value;
+        if ($author['allow_view_identities'] == 'everyone') {
+            for ($idx = 0; $idx < count($identities); $idx ++) {
+                $this->identities[$identities[$idx][0]] = $identities[$idx][1];
             }
         }
 
