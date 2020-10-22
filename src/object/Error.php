@@ -1,7 +1,7 @@
 <?php namespace XFRM\Object;
 defined('_XFRM_API') or exit('No direct script access allowed here.');
 
-require_once('JsonResponse.php');
+use XFRM\Object\JsonResponse as JsonResponse;
 
 class Error extends JsonResponse {
     private $code;
