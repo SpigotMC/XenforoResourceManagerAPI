@@ -56,8 +56,8 @@ class RequestUtil {
 
         // regex as per https://github.com/SpigotMC/XenforoResourceManagerAPI/issues/41#issuecomment-861888191
         // slightly modified to accommodate legacy usernames
-        if (!preg_match("/^[A-Za-z0-9_\.\- ]{3,}$/", $name)) {
-            echo new Error(400, "Invalid name. Name must be at least three characters in length and consist of letters, numbers, and/or a limited set of special characters (_, -, ., and/or one or more spaces).");
+        if (!preg_match("/^[A-Za-z0-9_\.\- ]{3,24}$/", $name)) {
+            echo new Error(400, "Invalid name. Name must be at 3-24 characters in length and consist of letters, numbers, and/or a limited set of special characters (_, -, ., and/or one or more spaces).");
             exit();
         }
 
