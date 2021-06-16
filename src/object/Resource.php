@@ -27,16 +27,15 @@ class Resource {
 
             switch ($field['field_id']) {
                 case 'native_mc_version':
-                    $this->native_minecraft_version = substr_replace($field['actual_field_value'], ".", 1, 0);
+                    $this->native_minecraft_version = self::cleanupVersion($field['actual_field_value']);
                     break;
                 case 'mc_versions':
                     $versions = array_map(
-                        function($element) {
-                            return substr_replace($element, ".", 1, 0);
+                        function($version) {
+                            return self::cleanupVersion($version);
                         },
                         unserialize($field['actual_field_value'])
                     );
-
                     $this->supported_minecraft_versions = array_values($versions);
                     break; 
             }
@@ -65,5 +64,13 @@ class Resource {
         );
 
         $this->description = $resource['message'];
+    }
+
+    private static function cleanupVersion($value) {
+        if (strtolower($value) != 'legacy') {
+            $value = str_replace('_', '.', $value);
+        }
+
+        return $value;
     }
 }
