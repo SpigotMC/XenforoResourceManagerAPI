@@ -2,25 +2,28 @@
 This project aims to safely expose information from the [SpigotMC](https://spigotmc.org) website in a machine-readable format for use in projects and other systems.
 
 ### Current Capabilities
-| Action                 | Description                                                                                         |
-|------------------------|-----------------------------------------------------------------------------------------------------|
-| listResources          | get information about all resources in the system, optionally specifying a category ID and/or a page|             
-| getResource            | get information about a resource by its ID                                                          |
-| getResourcesByAuthor   | get information about all resources created by a specific author by the user id                     |
-| listResourceCategories | get information about available resource categories; useful for `listResources` later on            |
-| getResourceUpdate      | get information about a specific resource update by its id                                          |
-| getResourceUpdates     | get information about all of the updates for a specific resource by the resource id                 |
-| getAuthor              | get information about an author by the user id                                                      |
-| findAuthor             | get information about an author by the username (**exact match only**)                              |
+| Action                 | Description                                                                                            |
+|------------------------|------------------------------------------------------------------------------------------------------- |
+| listResources          | get information about all resources in the system                                                      |             
+| getResource            | get information about a resource by its ID                                                             |
+| getResourcesByAuthor   | get information about all resources created by a specific author by the user id                        |
+| listResourceCategories | get information about available resource categories                                                    |
+| getResourceUpdate      | get information about a specific resource update by its id                                             |
+| getResourceUpdates     | get information about all of the updates for a specific resource by the resource id                    |
+| getAuthor              | get information about an author by the user id                                                         |
+| findAuthor             | get information about an author by the username (**exact username match only**)                        |
 
 ### How To Use
-All requests must currently be sent via **GET** to https://api.spigotmc.org/simple/0.2/index.php. To get started, attach a **GET** parameter `action` specifying which operation you'd like to perform (seen above). Then, attach the action's **GET** parameter(s) (seen above, currently only `id`).
+All requests must currently be sent via **GET** to https://api.spigotmc.org/simple/0.2/index.php. To get started, attach a **GET** parameter `action` specifying which operation you'd like to perform (seen above). Then, attach the action's **GET** parameter(s). See below for information on the parameters that each action accepts.
 
-### Example
-Here are examples of current capabilities:
+### Documentation
 
 #### listResources
-##### Parameters: `cat`, optional, ID from `listResourceCategories`; `page`, optional, defaults to `1`
+##### Parameters:
+| name 	| type 	| required 	| default 	| description                                                                 	|
+|------	|------	|----------	|---------	|-----------------------------------------------------------------------------	|
+| cat  	| int  	| no       	| none    	| The resource category to restrict results to (see `listResourceCategories`) 	|
+| page 	| int  	| no       	| 1       	| The page number to retrieve. Items are paginated at 10 results per page.    	|
 ##### Request: https://api.spigotmc.org/simple/0.2/index.php?action=listResources&cat=4&page=2
 ##### Response (truncated):
 ```json
@@ -83,7 +86,10 @@ Here are examples of current capabilities:
 ```
 
 #### getResource
-##### Parameters: `id`, required, the resource id
+##### Parameters:
+| name 	| type 	| required 	| default 	| description                                     |
+|------	|------	|----------	|---------	|------------------------------------------------ |
+| id  	| int  	| yes       | none    	| The id of the resource to retrieve              |
 ##### Request: https://api.spigotmc.org/simple/0.2/index.php?action=getResource&id=2
 ##### Response:
 ```json
@@ -121,7 +127,11 @@ Here are examples of current capabilities:
 ```
 
 #### getResourcesByAuthor
-##### Parameters: `id`, required, the author id, `page`, optional, defaults to `1`
+##### Parameters:
+| name 	| type 	| required 	| default 	| description                                                                 	|
+|------	|------	|----------	|---------	|-----------------------------------------------------------------------------	|
+| id  	| int  	| yes       | none    	| The id of the author to restrict results to (see `findAuthor`) 	              |
+| page 	| int  	| no       	| 1       	| The page number to retrieve. Items are paginated at 10 results per page.    	|
 ##### Request: https://api.spigotmc.org/simple/0.2/index.php?action=getResourcesByAuthor&id=100356&&page=1
 ##### Response (truncated):
 ```json
@@ -261,7 +271,11 @@ Here are examples of current capabilities:
 ```
 
 #### getResourceUpdate
-##### Parameters: `id`, required, the resource update id
+##### Parameters:
+| name 	| type 	| required 	| default 	| description                                                                 	|
+|------	|------	|----------	|---------	|-----------------------------------------------------------------------------	|
+| id  	| int  	| yes       | none    	| The id of the **resource _update_** to retrieve (see `getResourceUpdates`) 	  |
+| page 	| int  	| no       	| 1       	| The page number to retrieve. Items are paginated at 10 results per page.    	|
 ##### Request: https://api.spigotmc.org/simple/0.2/index.php?action=getResourceUpdate&id=352711
 ##### Response:
 ```json
@@ -274,7 +288,11 @@ Here are examples of current capabilities:
 ```
 
 #### getResourceUpdates
-##### Parameters: `id`, required, the resource id, `page`, optional, defaults to `1`
+##### Parameters:
+| name 	| type 	| required 	| default 	| description                                                                 	|
+|------	|------	|----------	|---------	|-----------------------------------------------------------------------------	|
+| id  	| int  	| yes       | none    	| The id of the resource for which to retrieve updates                          |
+| page 	| int  	| no       	| 1       	| The page number to retrieve. Items are paginated at 10 results per page.    	|
 ##### Request: https://api.spigotmc.org/simple/0.2/index.php?action=getResourceUpdates&id=2&page=1
 ##### Response (truncated):
 ```json
@@ -313,7 +331,10 @@ Here are examples of current capabilities:
 ```
 
 #### getAuthor
-##### Parameters: `id`, required, the user id
+##### Parameters:
+| name 	| type 	| required 	| default 	| description                                                                 	|
+|------	|------	|----------	|---------	|-----------------------------------------------------------------------------	|
+| id  	| int  	| yes       | none    	| The id of the author to retrieve 	                                            |
 ##### Request: https://api.spigotmc.org/simple/0.2/index.php?action=getAuthor&id=1
 ##### Response:
 ```json
@@ -329,7 +350,10 @@ Here are examples of current capabilities:
 ```
 
 #### findAuthor
-##### Parameters: `name`, required, should exactly match the Spigot username (escape if necessary)
+##### Parameters:
+| name 	| type 	| required 	| default 	| description                                                                 	          |
+|------	|------	|----------	|---------	|---------------------------------------------------------------------------------------	|
+| name  | str  	| yes       | none    	| The exactly matching username of the desired user, with escape sequences if necessary 	|
 ##### Request: https://api.spigotmc.org/simple/0.2/index.php?action=findAuthor&name=simpleauthority
 ##### Response:
 ```json
