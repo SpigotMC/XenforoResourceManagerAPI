@@ -121,8 +121,8 @@ Here are examples of current capabilities:
 ```
 
 #### getResourcesByAuthor
-##### Parameters: `id`, required, the author id
-##### Request: https://api.spigotmc.org/simple/0.2/index.php?action=getResourcesByAuthor&id=100356
+##### Parameters: `id`, required, the author id, `page`, optional, defaults to `1`
+##### Request: https://api.spigotmc.org/simple/0.2/index.php?action=getResourcesByAuthor&id=100356&&page=1
 ##### Response (truncated):
 ```json
 [
@@ -274,8 +274,8 @@ Here are examples of current capabilities:
 ```
 
 #### getResourceUpdates
-##### Parameters: `id`, required, the resource id
-##### Request: https://api.spigotmc.org/simple/0.2/index.php?action=getResourceUpdates&id=2
+##### Parameters: `id`, required, the resource id, `page`, optional, defaults to `1`
+##### Request: https://api.spigotmc.org/simple/0.2/index.php?action=getResourceUpdates&id=2&page=1
 ##### Response (truncated):
 ```json
 [
