@@ -275,7 +275,6 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
 | name 	| type 	| required 	| default 	| description                                                                 	|
 |------	|------	|----------	|---------	|-----------------------------------------------------------------------------	|
 | id  	| int  	| yes       | none    	| The id of the **resource _update_** to retrieve (see `getResourceUpdates`) 	  |
-| page 	| int  	| no       	| 1       	| The page number to retrieve. Items are paginated at 10 results per page.    	|
 ##### Request: https://api.spigotmc.org/simple/0.2/index.php?action=getResourceUpdate&id=352711
 ##### Response:
 ```json
