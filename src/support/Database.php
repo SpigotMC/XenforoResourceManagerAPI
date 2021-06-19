@@ -39,13 +39,17 @@ class Database {
     }
 
     public function listResources($category, $page) {
-        $page = $page == 1 ? 0 : 10 * ($page - 1);
+        if ($page <= 0) {
+            return NULL;
+        }
+
+        $offset = $page == 1 ? 0 : 10 * ($page - 1);
 
         if (!is_null($this->conn)) {
             $categoryClause = is_null($category) ? '' : 'AND r.resource_category_id = :resource_category_id';
             
             $resStmt = $this->conn->prepare($this->_resource(sprintf('%s LIMIT 10 OFFSET :offset', $categoryClause)));
-            $resStmt->bindParam(':offset', $page, \PDO::PARAM_INT);
+            $resStmt->bindParam(':offset', $offset, \PDO::PARAM_INT);
             
             if (!empty($categoryClause)) {
                 $resStmt->bindParam(':resource_category_id', $category);   
@@ -53,6 +57,10 @@ class Database {
 
             if ($resStmt->execute()) {
                 $resources = $resStmt->fetchAll();
+
+                if (is_null($resources) || $resources == false || empty($resources)) {
+                    return NULL;
+                }
 
                 for ($i = 0; $i < count($resources); $i++) {
                     $resource = $resources[$i];
@@ -74,10 +82,12 @@ class Database {
 
             if ($resStmt->execute()) {
                 $resource = $resStmt->fetch();
+                
                 if (!is_null($resource) && $resource !== false) {
                     $resource['fields'] = $this->_resource_fields($resource['resource_id']);
-                    return $resource;
                 }
+
+                return $resource;
             }
         }
 
@@ -85,12 +95,16 @@ class Database {
     }
 
     public function getResourcesByUser($user_id, $page) {
-        $page = $page == 1 ? 0 : 10 * ($page - 1);
+        if ($page <= 0 || !$this->_user_exists($user_id)) {
+            return NULL;
+        }
 
+        $offset = $page == 1 ? 0 : 10 * ($page - 1);
+        
         if (!is_null($this->conn)) {
             $resStmt = $this->conn->prepare($this->_resource('AND r.user_id = :user_id LIMIT 10 OFFSET :offset'));
             $resStmt->bindParam(':user_id', $user_id);
-            $resStmt->bindParam(':offset', $page, \PDO::PARAM_INT);
+            $resStmt->bindParam(':offset', $offset, \PDO::PARAM_INT);
 
             if ($resStmt->execute()) {
                 $resources = $resStmt->fetchAll();
@@ -134,12 +148,16 @@ class Database {
     }
 
     public function getResourceUpdates($resource_id, $page) {
-        $page = $page == 1 ? 0 : 10 * ($page - 1);
+        if ($page <= 0 || !$this->_resource_exists($resource_id)) {
+            return NULL;
+        }
+
+        $offset = $page == 1 ? 0 : 10 * ($page - 1);
 
         if (!is_null($this->conn)) {
             $updatesStmt = $this->conn->prepare($this->_resource_update('AND r.resource_id = :resource_id LIMIT 10 OFFSET :offset'));
             $updatesStmt->bindParam(':resource_id', $resource_id);
-            $updatesStmt->bindParam(':offset', $page, \PDO::PARAM_INT);
+            $updatesStmt->bindParam(':offset', $offset, \PDO::PARAM_INT);
 
             if ($updatesStmt->execute()) {
                 return $updatesStmt->fetchAll();
@@ -159,27 +177,30 @@ class Database {
                 WHERE u.user_id = :user_id
                 GROUP BY u.user_id"
             );
-
             $userStmt->bindParam(':user_id', $user_id);
 
-            $identStmt = $this->conn->prepare(
-                "SELECT ufv.field_id, ufv.field_value
-                FROM xf_user_field_value ufv
-                    INNER JOIN xf_user u
-                        ON u.user_id = ufv.user_id
-                    INNER JOIN xf_user_field uf
-                        ON uf.field_id = ufv.field_id AND uf.display_group = 'contact'
-                WHERE ufv.user_id = :user_id AND ufv.field_value IS NOT NULL AND ufv.field_value != ''"
-            );
+            if ($userStmt->execute()) {
+                $user = $userStmt->fetch();
+                if (!is_null($user) && $user != false) {
+                    $identStmt = $this->conn->prepare(
+                        "SELECT ufv.field_id, ufv.field_value
+                        FROM xf_user_field_value ufv
+                            INNER JOIN xf_user u
+                                ON u.user_id = ufv.user_id
+                            INNER JOIN xf_user_field uf
+                                ON uf.field_id = ufv.field_id AND uf.display_group = 'contact'
+                        WHERE ufv.user_id = :user_id AND ufv.field_value IS NOT NULL AND ufv.field_value != ''"
+                    );
+                    $identStmt->bindParam(':user_id', $user_id);
+                    
+                    $identities = new \stdClass();
+                    if ($identStmt->execute()) {
+                        $identities = $identStmt->fetchAll();
+                    }
 
-            $identStmt->bindParam(':user_id', $user_id);
-
-            if ($userStmt->execute() && $identStmt->execute()) {
-                $fetched = $userStmt->fetch();
-                if (!is_null($fetched) && $fetched !== false) {
                     $out = new \stdClass();
-                    $out->user = $fetched;
-                    $out->ident = $identStmt->fetchAll();
+                    $out->user = $userStmt->fetch();
+                    $out->ident = $identities;
                     return $out;
                 }
             }
@@ -247,5 +268,31 @@ class Database {
             WHERE r.message_state = 'visible' %s",
             $suffix
         );
+    }
+
+    private function _resource_exists($resource_id) {
+        if (!is_null($this->conn)) {
+            $stmt = $this->conn->prepare("SELECT EXISTS(SELECT 1 FROM xf_resource WHERE resource_id = :resource_id) AS 'exists'");
+            $stmt->bindParam(":resource_id", $resource_id);
+            
+            if ($stmt->execute()) {
+                return (bool) $stmt->fetch()['exists'];
+            }
+        }
+
+        return FALSE;
+    }
+
+    private function _user_exists($user_id) {
+        if (!is_null($this->conn)) {
+            $stmt = $this->conn->prepare("SELECT EXISTS(SELECT 1 FROM xf_user WHERE user_id = :user_id) AS 'exists'");
+            $stmt->bindParam(":user_id", $user_id);
+            
+            if ($stmt->execute()) {
+                return (bool) $stmt->fetch()['exists'];
+            }
+        }
+
+        return FALSE;
     }
 }
