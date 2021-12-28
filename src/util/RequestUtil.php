@@ -67,7 +67,7 @@ class RequestUtil {
     public static function page() {
         $value = $_GET['page'] ?? null;
 
-        if (!is_null($value) && is_numeric($value)) {
+        if (!is_null($value) && is_numeric($value) && $value > 0) {
             return $value;
         }
 
