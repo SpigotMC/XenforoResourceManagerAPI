@@ -173,10 +173,13 @@ class Database {
             $identStmt->bindParam(':user_id', $user_id);
 
             if ($userStmt->execute() && $identStmt->execute()) {
-                $out = new \stdClass();
-                $out->user = $userStmt->fetch();
-                $out->ident = $identStmt->fetchAll();
-                return $out;
+                $fetched = $userStmt->fetch();
+                if (!is_null($fetched) && $fetched !== false) {
+                    $out = new \stdClass();
+                    $out->user = $fetched;
+                    $out->ident = $identStmt->fetchAll();
+                    return $out;
+                }
             }
         }
 
