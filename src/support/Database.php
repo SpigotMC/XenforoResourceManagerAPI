@@ -74,8 +74,10 @@ class Database {
 
             if ($resStmt->execute()) {
                 $resource = $resStmt->fetch();
-                $resource['fields'] = $this->_resource_fields($resource['resource_id']);
-                return $resource;
+                if (!is_null($resource) && $resource !== false) {
+                    $resource['fields'] = $this->_resource_fields($resource['resource_id']);
+                    return $resource;
+                }
             }
         }
 
