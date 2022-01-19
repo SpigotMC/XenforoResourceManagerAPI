@@ -24,7 +24,7 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
 |---------- |------	|----------	|---------	|-----------------------------------------------------------------------------	|
 | category  | int  	| no       	| none    	| The resource category to restrict results to (see `listResourceCategories`) 	|
 | page 	    | int  	| no       	| 1       	| The page number to retrieve. Items are paginated at 10 results per page.    	|
-##### Request: https://api.spigotmc.org/simple/0.2/index.php?action=listResources&cat=4&page=2
+##### Request: https://api.spigotmc.org/simple/0.2/index.php?action=listResources&category=4&page=2
 ##### Response (truncated):
 ```json
 [
