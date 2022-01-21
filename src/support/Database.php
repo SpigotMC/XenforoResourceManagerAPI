@@ -133,13 +133,17 @@ class Database {
         return NULL;
     }
 
-    public function getResourceUpdates($resource_id, $page) {
+    public function getResourceUpdates($resource_id, $page, $sorting = null) {
         $page = $page == 1 ? 0 : 10 * ($page - 1);
 
+        // Default sorting option for this method.
+        if($sorting == null) $sorting = 'asc';
+
         if (!is_null($this->conn)) {
-            $updatesStmt = $this->conn->prepare($this->_resource_update('AND r.resource_id = :resource_id LIMIT 10 OFFSET :offset'));
+            $updatesStmt = $this->conn->prepare($this->_resource_update('AND r.resource_id = :resource_id ORDER BY id :order LIMIT 10 OFFSET :offset'));
             $updatesStmt->bindParam(':resource_id', $resource_id);
             $updatesStmt->bindParam(':offset', $page, \PDO::PARAM_INT);
+            $updatesStmt->bindParam(':order', $sorting, \PDO::PARAM_STR);
 
             if ($updatesStmt->execute()) {
                 return $updatesStmt->fetchAll();

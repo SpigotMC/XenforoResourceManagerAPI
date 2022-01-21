@@ -74,6 +74,20 @@ class RequestUtil {
         return 1;
     }
 
+    public static function sorting() {
+        $value = $_GET['sort'] ?? null;
+
+        // Preconditions
+        if($value == null || !is_string($value)) return;
+
+        // Sorting methods
+        if(strcasecmp($value, 'asc')) return 'asc';
+        if(strcasecmp($value, 'desc')) return 'desc';
+
+        // Return default null
+        return NULL;
+    }
+
     public static function category() {
         $value = $_GET['category'] ?? null;
 
