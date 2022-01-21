@@ -84,7 +84,7 @@ class RequestUtil {
         if(strcasecmp($value, 'asc')) return 'asc';
         if(strcasecmp($value, 'desc')) return 'desc';
 
-        // Return default null
+        // Return default null. This allows different defaults per method.
         return NULL;
     }
 
