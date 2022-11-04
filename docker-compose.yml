@@ -22,3 +22,4 @@ services:
             - "9000"
         volumes: 
             - "./docker/www/:/var/www/html/xfrm/"
+            - "./docker/php/php.ini:/usr/local/etc/php/php.ini"
