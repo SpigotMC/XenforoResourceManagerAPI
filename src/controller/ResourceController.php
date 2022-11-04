@@ -12,16 +12,17 @@ class ResourceController {
     }
     
     public function listResources() {
-        $out = array();
-
         $resources = $this->database->listResources(Req::category(), Req::page());
-
-        if (is_null($resources)) {
+        if (is_null($resources->resources)) {
             return NULL;
         }
 
-        foreach ($resources as $resource) {
-            array_push($out, new Resource($resource));
+        $out = new \stdClass();
+        $out->pagination = $resources->pagination;
+        $out->resources = array();
+
+        foreach ($resources->resources as $resource) {
+            array_push($out->resources, new Resource($resource));
         }
 
         return $out;

@@ -2,6 +2,7 @@
 defined('_XFRM_API') or exit('No direct script access allowed here.');
 
 use XFRM\Support\Config as Config;
+use XFRM\Object\PaginationInfo as PaginationInfo;
 
 class Database {
     private $conn;
@@ -39,28 +40,46 @@ class Database {
     }
 
     public function listResources($category, $page) {
-        $page = $page == 1 ? 0 : 10 * ($page - 1);
+        $perPage = Config::$data['MAX_RESULTS_PER_PAGE'];
+        $itemOffset = $page == 1 ? 0 : $perPage * ($page - 1);
 
         if (!is_null($this->conn)) {
             $categoryClause = is_null($category) ? '' : 'AND r.resource_category_id = :resource_category_id';
-            
-            $resStmt = $this->conn->prepare($this->_resource(sprintf('%s LIMIT 10 OFFSET :offset', $categoryClause)));
-            $resStmt->bindParam(':offset', $page, \PDO::PARAM_INT);
+
+            $resCountStmt = $this->conn->prepare($this->_resource_count($categoryClause));
+
+            $resStmt = $this->conn->prepare($this->_resource(sprintf('%s LIMIT :per_page OFFSET :offset', $categoryClause)));
+            $resStmt->bindParam(':per_page', $perPage, \PDO::PARAM_INT);
+            $resStmt->bindParam(':offset', $itemOffset, \PDO::PARAM_INT);
             
             if (!empty($categoryClause)) {
+                $resCountStmt->bindParam(':resource_category_id', $category);
                 $resStmt->bindParam(':resource_category_id', $category);   
             }
 
             if ($resStmt->execute()) {
-                $resources = $resStmt->fetchAll();
+                $out = new \stdClass();
 
-                for ($i = 0; $i < count($resources); $i++) {
+                $resources = $resStmt->fetchAll();
+                $numResources = count($resources);
+
+                for ($i = 0; $i < $numResources; $i++) {
                     $resource = $resources[$i];
                     $resource['fields'] = $this->_resource_fields($resource['resource_id']);
                     $resources[$i] = $resource;
                 }
 
-                return $resources;
+                $out->resources = $resources;
+
+                $totalResources = NULL;
+                if ($resCountStmt->execute()) {
+                    $totalNumResources = intval($resCountStmt->fetch()[0]);
+                }
+
+                $totalPages = ceil($totalNumResources / $perPage);
+                $out->pagination = new PaginationInfo(intval($page), $totalPages, $perPage, $numResources, $totalNumResources);
+
+                return $out;
             }
         }
 
@@ -137,7 +156,7 @@ class Database {
         $page = $page == 1 ? 0 : 10 * ($page - 1);
 
         if (!is_null($this->conn)) {
-            $updatesStmt = $this->conn->prepare($this->_resource_update('AND r.resource_id = :resource_id LIMIT 10 OFFSET :offset'));
+            $updatesStmt = $this->conn->prepare($this->_resource_update('AND r.resourc_resource_counte_id = :resource_id LIMIT 10 OFFSET :offset'));
             $updatesStmt->bindParam(':resource_id', $resource_id);
             $updatesStmt->bindParam(':offset', $page, \PDO::PARAM_INT);
 
@@ -185,6 +204,9 @@ class Database {
             }
         }
 
+        if ($resCount != false) {
+            $totalResources = $resCount[0];
+        }
         return NULL;
     }
 
@@ -213,6 +235,13 @@ class Database {
                 INNER JOIN xf_resource_update ru
                     ON r.description_update_id = ru.resource_update_id
             WHERE r.resource_state = 'visible' %s",
+            $suffix
+        );
+    }
+
+    private function _resource_count($suffix) {
+        return sprintf(
+            "SELECT COUNT(r.resource_id) FROM xf_resource r WHERE r.resource_state = 'visible' %s",
             $suffix
         );
     }

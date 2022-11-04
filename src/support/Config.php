@@ -10,6 +10,10 @@ class Config {
         'MYSQL_PORT' => 3306,
         'MYSQL_DATABASE' => 'database',
 
+        // Pagination settings
+        'MAX_RESULTS_PER_PAGE' => 10,
+        
+
         // set PUBLIC_PATH to the root the XenForo installation, including trailing slash
         'PUBLIC_PATH' => 'https://spigotmc.org/'
     );
