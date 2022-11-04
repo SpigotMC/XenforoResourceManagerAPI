@@ -24,19 +24,29 @@ class Resource {
 
         for ($idx = 0; $idx < count($resource['fields']); $idx++) {
             $field = $resource['fields'][$idx];
+            $value = $field['actual_field_value'];
 
             switch ($field['field_id']) {
                 case 'native_mc_version':
-                    $this->native_minecraft_version = self::cleanupVersion($field['actual_field_value']);
+                    if (is_null($value) || empty($value)) {
+                        $this->native_minecraft_version = NULL;
+                    } else {
+                        $this->native_minecraft_version = self::cleanupVersion($value);
+                    }
                     break;
                 case 'mc_versions':
-                    $versions = array_map(
-                        function($version) {
-                            return self::cleanupVersion($version);
-                        },
-                        unserialize($field['actual_field_value'])
-                    );
-                    $this->supported_minecraft_versions = array_values($versions);
+                    if (is_null($value) || empty($value)) {
+                        $this->supported_minecraft_versions = array();
+                    } else {
+                        $versions = array_map(
+                            function($version) {
+                                return self::cleanupVersion($version);
+                            },
+                            unserialize($value)
+                        );
+
+                        $this->supported_minecraft_versions = array_values($versions);
+                    }
                     break; 
             }
         }
