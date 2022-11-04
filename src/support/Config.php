@@ -11,6 +11,9 @@ class Config {
         'MYSQL_DATABASE' => 'database',
 
         // set PUBLIC_PATH to the root the XenForo installation, including trailing slash
-        'PUBLIC_PATH' => 'https://spigotmc.org/'
+        'PUBLIC_PATH' => 'https://spigotmc.org/',
+
+        // set PUBLIC_PATH_STATIC to the static asset site, including trailing slash
+        'PUBLIC_PATH_STATIC' => "https://static.spigotmc.org/"
     );
 }
