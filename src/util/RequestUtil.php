@@ -78,11 +78,14 @@ class RequestUtil {
         $value = $_GET['sort'] ?? null;
 
         // Preconditions
-        if($value == null || !is_string($value)) return;
+        if (is_null($value) || !is_string($value)) return;
 
         // Sorting methods
-        if(strcasecmp($value, 'asc')) return 'asc';
-        if(strcasecmp($value, 'desc')) return 'desc';
+        if(strcasecmp($value, 'asc') == 0) {
+            return 'asc';
+        } else if (strcasecmp($value, 'desc') == 0) {
+            return 'desc';
+        }
 
         // Return default null. This allows different defaults per method.
         return NULL;

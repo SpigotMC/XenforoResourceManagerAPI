@@ -137,13 +137,15 @@ class Database {
         $page = $page == 1 ? 0 : 10 * ($page - 1);
 
         // Default sorting option for this method.
-        if($sorting == null) $sorting = 'asc';
+        if (is_null($sorting)) $sorting = 'asc';
 
         if (!is_null($this->conn)) {
-            $updatesStmt = $this->conn->prepare($this->_resource_update('AND r.resource_id = :resource_id ORDER BY id :order LIMIT 10 OFFSET :offset'));
+            // PDO tries to quote the sorting method. Can't bind it normally. Should be OK, sorting is enforced to be 'asc' or 'desc'.
+            $querySuffix = sprintf("AND r.resource_id = :resource_id ORDER BY r.resource_update_id %s LIMIT 10 OFFSET :offset", $sorting);
+
+            $updatesStmt = $this->conn->prepare($this->_resource_update($querySuffix));
             $updatesStmt->bindParam(':resource_id', $resource_id);
             $updatesStmt->bindParam(':offset', $page, \PDO::PARAM_INT);
-            $updatesStmt->bindParam(':order', $sorting, \PDO::PARAM_STR);
 
             if ($updatesStmt->execute()) {
                 return $updatesStmt->fetchAll();
