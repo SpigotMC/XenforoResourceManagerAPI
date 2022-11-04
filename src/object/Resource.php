@@ -8,6 +8,7 @@ class Resource {
     public $title;
     public $tag;
     public $current_version;
+    public $category;
     public $native_minecraft_version;
     public $supported_minecraft_versions;
     public $icon_link;
@@ -21,6 +22,11 @@ class Resource {
         $this->title = $resource['title'];
         $this->tag = $resource['tag_line'];
         $this->current_version = $resource['version_string'];
+
+        $category = new \stdClass();
+        $category->id = $resource['resource_category_id'];
+        $category->title = $resource['category_title'];
+        $this->category = $category;
 
         for ($idx = 0; $idx < count($resource['fields']); $idx++) {
             $field = $resource['fields'][$idx];
