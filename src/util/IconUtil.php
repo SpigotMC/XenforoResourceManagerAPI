@@ -8,7 +8,7 @@ class IconUtil {
         $iconUrl = '';
 
         if ($icon_date == 0) {
-            $iconUrl = Config::$data['PUBLIC_PATH'] . 'styles/default/xenresource/resource_icon.png';
+            $iconUrl = Config::$data['PUBLIC_PATH_STATIC'] . 'styles/spigot/xenresource/resource_icon.png';
         } else {
             $iconUrl = Config::$data['PUBLIC_PATH'] . sprintf('data/resource_icons/%d/%d.jpg?%d', floor($resource_id / 1000), $resource_id, $icon_date);
 
@@ -26,7 +26,7 @@ class IconUtil {
             $iconUrl = sprintf('https://www.gravatar.com/avatar/%s.jpg?s=96', $gravatar_hash);
         } else {
             if ($avatar_date == 0) {
-                $iconUrl = Config::$data['PUBLIC_PATH'] . 'styles/spigot/xenforo/avatars/avatar_male_l.png';
+                $iconUrl = Config::$data['PUBLIC_PATH_STATIC'] . 'styles/spigot/xenforo/avatars/avatar_male_l.png';
             } else {
                 $iconUrl = Config::$data['PUBLIC_PATH'] . sprintf('data/avatars/l/%d/%d.jpg?%d', floor($user_id / 1000), $user_id, $avatar_date);
             }
