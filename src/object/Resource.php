@@ -15,6 +15,7 @@ class Resource {
     public $author;
     public $premium;
     public $stats;
+    public $external_download_url;
     public $description;
 
     public function __construct($resource) {
@@ -68,6 +69,8 @@ class Resource {
             ),
             'rating' => $resource['rating_avg']
         );
+
+        $this->external_download_url = $resource['download_url'];
 
         $this->description = $resource['message'];
     }
