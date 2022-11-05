@@ -67,7 +67,7 @@ class Resource {
                 'unique' => $resource['rating_count'],
                 'total' => $resource['review_count']
             ),
-            'rating' => $resource['rating_avg']
+            'rating' => strval(round($resource['rating_avg'], 1))
         );
 
         $this->external_download_url = $resource['download_url'];
