@@ -242,8 +242,9 @@ class Database {
 
     private function _resource_update($suffix) {
         return sprintf(
-            "SELECT r.resource_update_id, r.resource_id, r.title, r.message
+            "SELECT r.resource_update_id, r.resource_id, rv.version_string, r.title, r.message
             FROM xf_resource_update r
+                INNER JOIN xf_resource_version rv ON r.resource_update_id = rv.resource_update_id
             WHERE r.message_state = 'visible' %s",
             $suffix
         );
