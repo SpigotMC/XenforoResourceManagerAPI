@@ -1,0 +1,290 @@
+openapi: '3.0.0'
+info:
+  version: '0.2'
+  title: 'SpigotMC Xenforo Resource Manager API'
+  description: Exposes resource/author information via a simple JSON REST API
+servers:
+  - url: https://api.spigotmc.org/simple/0.2
+paths:
+  /index.php?action=listResources:
+    parameters:
+      - name: category
+        description: The category ID from which to draw resources
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: page
+        description: The page of results to get
+        in: query
+        required: false
+        schema:
+          type: integer
+    get:
+      summary: Obtain a list of all resources
+      responses:
+        '200':
+          description: An object with pagination info and a resources array containing the collected resource information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageableResources'
+  /index.php?action=getResource:
+    parameters:
+      - name: id
+        description: The resource ID
+        in: query
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Obtain a resource
+      responses:
+        '200':
+          description: An object containing information about the located resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+  /index.php?action=getResourcesByAuthor:
+    parameters:
+      - name: id
+        description: The author/user id
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: page
+        description: The page of results to get
+        in: query
+        schema:
+          type: integer
+    get:
+      summary: Obtain a list of all resources by a specific author/user
+      responses:
+        '200':
+          description: An object with pagination info and a resources array containing the collected resource information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageableResources'
+  /index.php?action=listResourceCategories:
+    get:
+      summary: Obtain a list of all resource categories
+      responses:
+        '200':
+          description: An array containing objects describing each resource category
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayOfResourceCategories'
+  /index.php?action=getResourceUpdate:
+    parameters:
+      - name: id
+        description: The resource update ID
+        in: query
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Obtain a specific update to a resource
+      responses:
+        '200':
+          description: An object containing information about an update to a resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceUpdate'
+  /index.php?action=getResourceUpdates:
+    parameters:
+      - name: id
+        description: The resource ID
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: page
+        description: The page of results to get
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: sort
+        description: The method to sort by (default 'asc')
+        in: query
+        required: false
+        schema:
+          type: string
+    get:
+      summary: Obtain all the updates to a resource
+      responses:
+        '200':
+          description: An object with pagination info and an updates array containing the collected update information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageableResourceUpdates'
+  /index.php?action=getAuthor:
+    parameters:
+      - name: id
+        description: The author ID
+        in: query
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Obtain an author/user by their id
+      responses:
+        '200':
+          description: An object containing information about an author/user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author'
+  /index.php?action=findAuthor:
+    parameters:
+      - name: id
+        description: The author username
+        in: query
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Obtain an author/user by their id
+      responses:
+        '200':
+          description: An object containing information about an author/user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author'
+components:
+  schemas:
+    PaginationInfo:
+      type: object
+      properties:
+        current_page:
+          type: integer
+        total_pages:
+          type: integer
+        items_per_page:
+          type: integer
+        results:
+          type: integer
+        total_results:
+          type: integer   
+    Resource:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        tag:
+          type: string
+        current_version:
+          type: string
+        native_minecraft_version:
+          type: string
+          nullable: true
+        supported_minecraft_versions:
+          type: array
+          items:
+            type: string
+        icon_link:
+          type: string
+        author:
+          type: object
+          properties:
+            id:
+              type: string
+            username:
+              type: string
+        premium:
+          type: object
+          properties:
+            price:
+              type: string
+            currency:
+              type: string
+        stats:
+          type: object
+          properties:
+            downloads:
+              type: string
+            updates:
+              type: string
+            reviews:
+              type: object
+              properties:
+                unique:
+                  type: string
+                total:
+                  type: string
+            rating:
+              type: string
+        description:
+          type: string
+    ArrayOfResources:
+      type: array
+      items:
+        $ref: '#/components/schemas/Resource'
+    PageableResources:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/PaginationInfo'
+        resources:
+          $ref: '#/components/schemas/ArrayOfResources'
+    ResourceUpdate:
+      type: object
+      properties:
+        id:
+          type: string
+        resource_id:
+          type: string
+        resource_version:
+          type: string
+        title:
+          type: string
+        message:
+          type: string
+    ArrayOfResourceUpdates:
+      type: array
+      items:
+        $ref: '#/components/schemas/ResourceUpdate'
+    PageableResourceUpdates:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/PaginationInfo'
+        resources:
+          $ref: '#/components/schemas/ArrayOfResourceUpdates'
+    ResourceCategory:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+    ArrayOfResourceCategories:
+      type: array
+      items:
+        $ref: '#/components/schemas/ResourceCategory'
+    Author:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        resource_count:
+          type: string
+        identities:
+          type: array
+          items:
+            type: string
+        avatar:
+          type: string
