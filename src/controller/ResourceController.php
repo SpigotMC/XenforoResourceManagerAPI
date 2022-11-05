@@ -41,17 +41,20 @@ class ResourceController {
     }
 
     public function getResourcesByAuthor() {
-        $out = array();
+        $out = new \stdClass();
+        $out->pagination = new \stdClass();
+        $out->resources = array();
 
         if (Req::checkIdParam()) {
-            $resources = $this->database->getResourcesByUser(Req::id(), Req::page());
-            
-            if (is_null($resources)) {
+            $resources = $this->database->getResourcesByUser(Req::id(), Req::category(), Req::page());
+            if (is_null($resources->resources)) {
                 return NULL;
             }
 
-            foreach ($resources as $resource) {
-                array_push($out, new Resource($resource));
+            $out->pagination = $resources->pagination;
+
+            foreach ($resources->resources as $resource) {
+                array_push($out->resources, new Resource($resource));
             }
         }
 
