@@ -36,7 +36,7 @@ class Resource {
                     break;
                 case 'mc_versions':
                     if (is_null($value) || empty($value)) {
-                        $this->supported_minecraft_versions = array();
+                        $this->supported_minecraft_versions = [];
                     } else {
                         $versions = array_map(
                             function($version) {

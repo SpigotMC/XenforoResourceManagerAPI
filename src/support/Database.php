@@ -43,7 +43,7 @@ class Database {
             return NULL;
         }
 
-        $offset = $page == 1 ? 0 : 10 * ($page - 1);
+        $offset = $page === 1 ? 0 : 10 * ($page - 1);
 
         if (!is_null($this->conn)) {
             $categoryClause = is_null($category) ? '' : 'AND r.resource_category_id = :resource_category_id';
@@ -58,7 +58,7 @@ class Database {
             if ($resStmt->execute()) {
                 $resources = $resStmt->fetchAll();
 
-                if (is_null($resources) || $resources == false || empty($resources)) {
+                if (is_null($resources) || $resources === false || empty($resources)) {
                     return NULL;
                 }
 
@@ -99,7 +99,7 @@ class Database {
             return NULL;
         }
 
-        $offset = $page == 1 ? 0 : 10 * ($page - 1);
+        $offset = $page === 1 ? 0 : 10 * ($page - 1);
         
         if (!is_null($this->conn)) {
             $resStmt = $this->conn->prepare($this->_resource('AND r.user_id = :user_id LIMIT 10 OFFSET :offset'));
@@ -152,7 +152,7 @@ class Database {
             return NULL;
         }
 
-        $offset = $page == 1 ? 0 : 10 * ($page - 1);
+        $offset = $page === 1 ? 0 : 10 * ($page - 1);
 
         if (!is_null($this->conn)) {
             $updatesStmt = $this->conn->prepare($this->_resource_update('AND r.resource_id = :resource_id LIMIT 10 OFFSET :offset'));
