@@ -75,10 +75,10 @@ class RequestUtil {
     }
 
     public static function sorting() {
-        $value = $_GET['sort'] ?? null;
+        $value = $_GET['sort'] ?? NULL;
 
         // Preconditions
-        if (is_null($value) || !is_string($value)) return;
+        if (is_null($value) || !is_string($value)) return NULL;
 
         // Sorting methods
         if(strcasecmp($value, 'asc') == 0) {
