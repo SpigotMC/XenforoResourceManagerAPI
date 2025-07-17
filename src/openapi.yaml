@@ -21,6 +21,7 @@ paths:
         schema:
           type: integer
     get:
+      operationId: listResources
       summary: Obtain a list of all resources
       responses:
         '200':
@@ -38,6 +39,7 @@ paths:
         schema:
           type: integer
     get:
+      operationId: getResource
       summary: Obtain a resource
       responses:
         '200':
@@ -60,6 +62,7 @@ paths:
         schema:
           type: integer
     get:
+      operationId: getResourcesByAuthor
       summary: Obtain a list of all resources by a specific author/user
       responses:
         '200':
@@ -70,6 +73,7 @@ paths:
                 $ref: '#/components/schemas/PageableResources'
   /index.php?action=listResourceCategories:
     get:
+      operationId: listResourceCategories
       summary: Obtain a list of all resource categories
       responses:
         '200':
@@ -87,6 +91,7 @@ paths:
         schema:
           type: integer
     get:
+      operationId: getResourceUpdate
       summary: Obtain a specific update to a resource
       responses:
         '200':
@@ -116,6 +121,7 @@ paths:
         schema:
           type: string
     get:
+      operationId: getResourceUpdates
       summary: Obtain all the updates to a resource
       responses:
         '200':
@@ -133,6 +139,7 @@ paths:
         schema:
           type: integer
     get:
+      operationId: getAuthor
       summary: Obtain an author/user by their id
       responses:
         '200':
@@ -150,6 +157,7 @@ paths:
         schema:
           type: string
     get:
+      operationId: findAuthor
       summary: Obtain an author/user by their name
       responses:
         '200':
