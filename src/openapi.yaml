@@ -28,7 +28,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PageableResources'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Resource'
   /index.php?action=getResource:
     parameters:
       - name: id
@@ -67,7 +69,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PageableResources'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Resource'
   /index.php?action=listResourceCategories:
     get:
       summary: Obtain a list of all resource categories
@@ -77,7 +81,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArrayOfResourceCategories'
+                type: array
+                items:
+                  $ref: '#/components/schemas/ResourceCategory'
   /index.php?action=getResourceUpdate:
     parameters:
       - name: id
@@ -123,7 +129,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PageableResourceUpdates'
+                type: array
+                items:
+                  $ref: '#/components/schemas/ResourceUpdate'
   /index.php?action=getAuthor:
     parameters:
       - name: id
@@ -160,19 +168,6 @@ paths:
                 $ref: '#/components/schemas/Author'
 components:
   schemas:
-    PaginationInfo:
-      type: object
-      properties:
-        current_page:
-          type: integer
-        total_pages:
-          type: integer
-        items_per_page:
-          type: integer
-        results:
-          type: integer
-        total_results:
-          type: integer   
     Resource:
       type: object
       properties:
@@ -225,17 +220,6 @@ components:
               type: string
         description:
           type: string
-    ArrayOfResources:
-      type: array
-      items:
-        $ref: '#/components/schemas/Resource'
-    PageableResources:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/PaginationInfo'
-        resources:
-          $ref: '#/components/schemas/ArrayOfResources'
     ResourceUpdate:
       type: object
       properties:
@@ -249,17 +233,6 @@ components:
           type: string
         message:
           type: string
-    ArrayOfResourceUpdates:
-      type: array
-      items:
-        $ref: '#/components/schemas/ResourceUpdate'
-    PageableResourceUpdates:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/PaginationInfo'
-        resources:
-          $ref: '#/components/schemas/ArrayOfResourceUpdates'
     ResourceCategory:
       type: object
       properties:
@@ -269,10 +242,6 @@ components:
           type: string
         description:
           type: string
-    ArrayOfResourceCategories:
-      type: array
-      items:
-        $ref: '#/components/schemas/ResourceCategory'
     Author:
       type: object
       properties:
