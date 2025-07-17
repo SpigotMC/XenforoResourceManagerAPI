@@ -283,8 +283,33 @@ components:
         resource_count:
           type: string
         identities:
-          type: array
-          items:
-            type: string
+          type: object
+          required: []
+          properties:
+            github:
+              type: string
+            discord:
+              type: string
+            youtube:
+              type: string
+            aim:
+              type: string
+            # called "Windows Live" in the UI
+            msn:
+              type: string
+            icq:
+              type: string
+            # called "Yahoo! Messenger" in the UI
+            yahoo:
+              type: string
+            skype:
+              type: string
+            # called "Google Talk" in the UI
+            gtalk:
+              type: string
+            facebook:
+              type: string
+            twitter:
+              type: string
         avatar:
           type: string
