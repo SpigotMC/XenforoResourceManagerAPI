@@ -143,14 +143,14 @@ paths:
                 $ref: '#/components/schemas/Author'
   /index.php?action=findAuthor:
     parameters:
-      - name: id
+      - name: name
         description: The author username
         in: query
         required: true
         schema:
           type: string
     get:
-      summary: Obtain an author/user by their id
+      summary: Obtain an author/user by their name
       responses:
         '200':
           description: An object containing information about an author/user
