@@ -23,14 +23,20 @@ class ResourceUpdateController {
     }
 
     public function getResourceUpdates() {
-        $out = array();
+        $out = new \stdClass();
+        $out->pagination = new \stdClass();
+        $out->updates = array();
 
         if (Req::checkIdParam()) {
             $updates = $this->database->getResourceUpdates($_GET['id'], Req::page());
-            if (is_null($updates)) return NULL;
+            if (is_null($updates)) {
+                return NULL;
+            }
 
-            foreach ($updates as $update) {
-                array_push($out, new ResourceUpdate($update));
+            $out->pagination = $updates->pagination;
+
+            foreach ($updates->updates as $update) {
+                array_push($out->updates, new ResourceUpdate($update));
             }
         }
 
