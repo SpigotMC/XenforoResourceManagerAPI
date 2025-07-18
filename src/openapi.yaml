@@ -231,6 +231,12 @@ components:
                   type: string
             rating:
               type: string
+        creation_date:
+          type: integer
+          description: "creation date as timestamp (in seconds)"
+        last_update:
+          type: integer
+          description: "last update as timestamp (in seconds)"
         description:
           type: string
     ArrayOfResources:

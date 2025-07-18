@@ -16,7 +16,7 @@ class Resource {
     public $premium;
     public $stats;
     public $external_download_url;
-    public $creation_date;
+    public $first_release;
     public $last_update;
     public $description;
 
@@ -74,7 +74,7 @@ class Resource {
 
         $this->external_download_url = $resource['download_url'];
 
-        $this->creation_date = $resource['resource_date'];
+        $this->first_release = $resource['resource_date'];
         $this->last_update = $resource['last_update'];
 
         $this->description = $resource['message'];
