@@ -231,9 +231,9 @@ components:
                   type: string
             rating:
               type: string
-        creation_date:
+        first_release:
           type: integer
-          description: "creation date as timestamp (in seconds)"
+          description: "first release date as timestamp (in seconds)"
         last_update:
           type: integer
           description: "last update as timestamp (in seconds)"
