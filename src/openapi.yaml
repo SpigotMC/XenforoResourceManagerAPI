@@ -219,18 +219,19 @@ components:
           type: object
           properties:
             downloads:
-              type: string
+              type: integer
             updates:
-              type: string
+              type: integer
             reviews:
               type: object
               properties:
                 unique:
-                  type: string
+                  type: integer
                 total:
-                  type: string
+                  type: integer
             rating:
-              type: string
+              type: number
+              format: double
         description:
           type: string
     ArrayOfResources:
@@ -289,7 +290,7 @@ components:
         username:
           type: string
         resource_count:
-          type: string
+          type: integer
         identities:
           type: object
           required: []
