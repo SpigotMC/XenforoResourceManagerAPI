@@ -205,18 +205,38 @@ class Database {
     }
 
     private function _resource($suffix) {
-        return sprintf(
-            "SELECT r.resource_id, r.title, r.tag_line, r.user_id, r.username, r.price, r.currency, r.download_count, r.update_count, r.rating_count, r.review_count, r.rating_avg, r.icon_date, rv.version_string, rv.download_url, ru.message, rc.resource_category_id, rc.category_title
-            FROM xf_resource r
-                INNER JOIN xf_resource_version rv 
-                    ON r.current_version_id = rv.resource_version_id 
-                INNER JOIN xf_resource_update ru
-                    ON r.description_update_id = ru.resource_update_id
-                INNER JOIN xf_resource_category rc
-                    ON r.resource_category_id = rc.resource_category_id
-            WHERE r.resource_state = 'visible' %s",
-            $suffix
-        );
+        $query = <<<SQL
+SELECT r.resource_id,
+       r.title,
+       r.tag_line,
+       r.user_id,
+       r.username,
+       r.price,
+       r.currency,
+       r.download_count,
+       r.update_count,
+       r.rating_count,
+       r.review_count,
+       r.rating_avg,
+       r.icon_date,
+       r.resource_date,
+       r.last_update,
+       rv.version_string,
+       rv.download_url,
+       ru.message,
+       rc.resource_category_id,
+       rc.category_title
+FROM   xf_resource r
+       INNER JOIN xf_resource_version rv
+               ON r.current_version_id = rv.resource_version_id
+       INNER JOIN xf_resource_update ru
+               ON r.description_update_id = ru.resource_update_id
+       INNER JOIN xf_resource_category rc
+               ON r.resource_category_id = rc.resource_category_id
+WHERE  r.resource_state = 'visible' %s
+SQL;
+
+        return sprintf($query, $suffix);
     }
 
     private function _resource_fields($resource_id) {
