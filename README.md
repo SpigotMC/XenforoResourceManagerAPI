@@ -33,6 +33,11 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
     "title":"BungeeLobbyKick",
     "tag":"This plugin will move all players to a configured server on command",
     "current_version":"0.2",
+    "category":{
+      "id":3,
+      "title":"Bungee - Proxy",
+      "description":"Bungee plugins that interact directly with the proxy plugins folder."
+    },
     "native_minecraft_version":null,
     "supported_minecraft_versions":null,
     "icon_link":"https:\/\/www.spigotmc.org\/styles\/default\/xenresource\/resource_icon.png",
@@ -60,6 +65,11 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
     "title":"BungeeKickStop",
     "tag":"Bungee Kick control plugin - move players to a different server when kicked",
     "current_version":"0.1",
+    "category":{
+      "id":3,
+      "title":"Bungee - Proxy",
+      "description":"Bungee plugins that interact directly with the proxy plugins folder."
+    },      
     "native_minecraft_version":null,
     "supported_minecraft_versions":null,
     "icon_link":"https:\/\/www.spigotmc.org\/styles\/default\/xenresource\/resource_icon.png",
@@ -98,6 +108,11 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
   "title":"HubKick",
   "tag":"Send players to lobby on kick. \/lobby \/ hub",
   "current_version":"1.7.1",
+  "category":{
+    "id":2,
+    "title":"Bungee - Spigot",
+    "description":"Spigot plugins that interact with BungeeCord."
+  },    
   "native_minecraft_version":null,
   "supported_minecraft_versions":[
     "1.7",
@@ -140,7 +155,12 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
     "id":"57242",
     "title":"spark",
     "tag":"spark is a performance profiling plugin\/mod for Minecraft clients, servers and proxies.",
-    "current_version":"1.6.1",
+    "current_version":"1.6.1", 
+    "category":{
+      "id":15,
+      "title":"Tools and Utilities",
+      "description":""
+    },
     "native_minecraft_version":"",
     "supported_minecraft_versions":[
       "1.8",
@@ -178,7 +198,12 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
     "id":"28140",
     "title":"LuckPerms",
     "tag":"A permissions plugin for Minecraft servers (Bukkit\/Spigot, BungeeCord & more)",
-    "current_version":"5.3.47",
+    "current_version":"5.3.47", 
+    "category":{
+      "id":21,
+      "title":"Universal",
+      "description":""
+    },
     "native_minecraft_version":"",
     "supported_minecraft_versions":[
       "1.7",

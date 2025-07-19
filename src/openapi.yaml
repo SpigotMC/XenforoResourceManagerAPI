@@ -192,6 +192,8 @@ components:
           type: string
         current_version:
           type: string
+        category:
+          $ref: '#/components/schemas/ResourceCategory'
         native_minecraft_version:
           type: string
           nullable: true
