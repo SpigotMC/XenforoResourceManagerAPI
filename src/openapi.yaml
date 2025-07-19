@@ -231,6 +231,10 @@ components:
                   type: string
             rating:
               type: string
+        external_download_url:
+          type: string
+          format: uri
+          default: ""
         description:
           type: string
     ArrayOfResources:
