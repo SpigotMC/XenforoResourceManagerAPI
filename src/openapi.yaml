@@ -185,7 +185,7 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
         title:
           type: string
         tag:
@@ -201,11 +201,12 @@ components:
             type: string
         icon_link:
           type: string
+          format: uri
         author:
           type: object
           properties:
             id:
-              type: string
+              type: integer
             username:
               type: string
         premium:
@@ -232,6 +233,10 @@ components:
             rating:
               type: number
               format: double
+        external_download_url:
+          type: string
+          format: uri
+          default: ""
         description:
           type: string
     ArrayOfResources:
@@ -249,9 +254,9 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
         resource_id:
-          type: string
+          type: integer
         resource_version:
           type: string
         title:
@@ -273,7 +278,7 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
         title:
           type: string
         description:
@@ -286,7 +291,7 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
         username:
           type: string
         resource_count:
@@ -322,3 +327,4 @@ components:
               type: string
         avatar:
           type: string
+          format: uri
