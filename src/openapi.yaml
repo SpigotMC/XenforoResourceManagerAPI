@@ -201,6 +201,7 @@ components:
             type: string
         icon_link:
           type: string
+          format: uri
         author:
           type: object
           properties:
@@ -325,3 +326,4 @@ components:
               type: string
         avatar:
           type: string
+          format: uri
