@@ -19,7 +19,12 @@ class Author {
         $this->username = $author['username'];
         $this->resource_count = $author['resource_count'];
         $this->avatar = Icons::getUserIcon($this->id, $author['avatar_date'], $author['gravatar']);
-        $this->last_activity = $author['last_activity'];
+
+        if ($author['allow_view_profile'] === 'everyone' && $author['visible']) {
+            $this->last_activity = $author['last_activity'];
+        } else {
+            $this->last_activity = null;
+        }
 
         $this->identities = array();
         if ($author['allow_view_identities'] == 'everyone') {
