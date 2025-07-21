@@ -9,6 +9,7 @@ class Author {
     public $resource_count;
     public $identities;
     public $avatar;
+    public $last_activity;
 
     public function __construct($payload) {
         $author = $payload->user;
@@ -18,6 +19,7 @@ class Author {
         $this->username = $author['username'];
         $this->resource_count = $author['resource_count'];
         $this->avatar = Icons::getUserIcon($this->id, $author['avatar_date'], $author['gravatar']);
+        $this->last_activity = $author['last_activity'];
 
         $this->identities = array();
         if ($author['allow_view_identities'] == 'everyone') {
