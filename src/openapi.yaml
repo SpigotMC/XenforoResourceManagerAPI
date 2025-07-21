@@ -185,7 +185,7 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
         title:
           type: string
         tag:
@@ -201,11 +201,12 @@ components:
             type: string
         icon_link:
           type: string
+          format: uri
         author:
           type: object
           properties:
             id:
-              type: string
+              type: integer
             username:
               type: string
         premium:
@@ -219,24 +220,29 @@ components:
           type: object
           properties:
             downloads:
-              type: string
+              type: integer
             updates:
-              type: string
+              type: integer
             reviews:
               type: object
               properties:
                 unique:
-                  type: string
+                  type: integer
                 total:
-                  type: string
+                  type: integer
             rating:
-              type: string
+              type: number
+              format: double
         first_release:
           type: integer
           description: "first release date as timestamp (in seconds)"
         last_update:
           type: integer
           description: "last update as timestamp (in seconds)"
+        external_download_url:
+          type: string
+          format: uri
+          default: ""
         description:
           type: string
     ArrayOfResources:
@@ -254,9 +260,9 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
         resource_id:
-          type: string
+          type: integer
         resource_version:
           type: string
         title:
@@ -278,7 +284,7 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
         title:
           type: string
         description:
@@ -291,11 +297,11 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
         username:
           type: string
         resource_count:
-          type: string
+          type: integer
         identities:
           type: object
           required: []
@@ -327,3 +333,4 @@ components:
               type: string
         avatar:
           type: string
+          format: uri
