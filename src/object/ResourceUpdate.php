@@ -5,6 +5,7 @@ class ResourceUpdate {
     public $id;
     public $resource_id;
     public $resource_version;
+    public $download_url;
     public $title;
     public $message;
 
@@ -12,6 +13,7 @@ class ResourceUpdate {
         $this->id = $update['resource_update_id'];
         $this->resource_id = $update['resource_id'];
         $this->resource_version = $update['version_string'];
+        $this->download_url = $update['download_url'];
         $this->title = $update['title'];
         $this->message = $update['message'];
     }
