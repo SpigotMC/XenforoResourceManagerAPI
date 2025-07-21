@@ -281,6 +281,7 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
 {
   "id":"352711",
   "resource_id":"6245",
+  "download_count":282429,
   "title":"2.10.9 back to normal",
   "message":"[B][SIZE=6]2.10.9\n[\/SIZE][\/B]\n[LIST]\n[*][SIZE=4]Fixed issues with maven repo regarding Jetbrains annotations when using other IDE's[\/SIZE]\n[\/LIST]\n[SIZE=4]Like this update to pay respects[\/SIZE]\n[LIST]\n[*][SIZE=4]Updated deprecation methods in PlaceholderAPI class. Now normal methods of setPlaceholders will not nag you regardless if you use Player or OfflinePlayer.. This also resolves issues with plugins providing placeholders as both methods pre 2.10.7 are functional from PlaceholderHook. Use onRequest or onPlaceholderRequest.... Doesn't matter until we hit 3.0.0.  [\/SIZE]\n[*][SIZE=4]Fixed a few bugs that probably wont be noticed but if you really care about them you can follow the trail if you are on the hunt [\/SIZE]\n[\/LIST]\n[URL]https:\/\/github.com\/PlaceholderAPI\/PlaceholderAPI\/commits\/master[\/URL]\n\nThis update was mainly focused on people who actually hook into PlaceholderAPI so I hope this resolves any issues you may have with deprecated methods or stuff not working. I really don't want people using the dev repo as a way to release updates however they are a good way for everyone to test. Based on the feedback I felt this was the thing to do as we don't want to break things until PAPI3 drops.\n[SIZE=4]\n\n\n[\/SIZE]"
 }
@@ -299,30 +300,35 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
   {
     "id":"2",
     "resource_id":"2",
+    "download_count":251,
     "title":"HubKick",
     "message":"[CENTER][I][B][URL='https:\/\/discord.gg\/SvFEBGW'][IMG]https:\/\/i.imgur.com\/inmwaK3.png[\/IMG] [\/URL]| [URL='https:\/\/www.paypal.me\/LaxWasHere'][IMG]https:\/\/i.imgur.com\/h5YgdLC.png[\/IMG][\/URL] | [URL='https:\/\/github.com\/AwesomePowered\/HubKick'][IMG]https:\/\/i.imgur.com\/ikjLwXh.png[\/IMG][\/URL][\/B][\/I][\/CENTER]\n[I][B]Info[\/B]\nWhen a player get's kicked from the server, this plugin will forward him\/her to the server you specified in the config.yml.\nKick everyone and shutdown the server or just kick everyone.\n\n[B]Configuration[\/B]\n[code]#Hub is the server you want the players to be sent to.\nHubServer: hub\n\n#Enable this and it will pick a hub on random when kicked\nHubs:\n- Hub\n- Lobby\nrandomHubs: false\n\n#Regex pattern for forcekicking a player. No touchy touchy pls\nignorePattern: '(\\bafk|AFK|-f\\b)'\n\n#Prefix\nprefix: '&4[&aHubKick&4]'\n\n#Message to be sent when kicking everyone\/ shutting down the server.\nKickallMessage: '&a&lServer shutting down, you have been kicked to the hub!'\n\n#Should the plugin send the users on hub on kick?\nHubOnKick: true\n[\/code]\n\n[B]Installation[\/B]\n [\/I]\n[LIST]\n[I]\n[LIST][*]Drop the HubKick.jar at your \/plugins folder[\/LIST]\n[LIST][*]Restart Server[\/LIST]\n[LIST][*]Get Kicked[\/LIST][\/I]\n[\/LIST]\n[I][B]Commands:[\/B]\n[CODE]\/hub (sends you to he hub server)\n\/lobby (same as above)\n\/alltolobby (sends everyone to lobby)\n\/lobbyall (Same as above)\n\/sendplayer(Sends player to a server)\n\/sendp(^)\n\/shutdown (sends everyone to lobby and shuts down the server)\n\/forcekick (kicked the player off the network) (or simply add -f to a kick message)\n\/fkick (same as above)\n[\/CODE]\n\n[B]Permissions:[\/B]\n [\/I]\n[LIST]\n[I]\n[LIST][*]hubkick.command[\/LIST]\n[LIST][*]hubkick.kickall[\/LIST]\n[LIST][*]hubkick.send[\/LIST]\n[LIST][*]hubkick.shutdown[\/LIST]\n[LIST][*]hubkick.forcekick[\/LIST][\/I]\n[\/LIST]\n[I][URL='https:\/\/github.com\/AwesomePowered\/HubKick']Github[\/URL][\/I]"
   },
   {
     "id":"17",
     "resource_id":"2",
+    "download_count":346,
     "title":"Added \/lobby|\/hub command",
     "message":"New commands.\n \n[LIST]\n[*]\/hub\n[*]\/lobby\n[\/LIST]"
   },
   {
     "id":"66",
     "resource_id":"2",
+    "download_count":298,  
     "title":"Added permission",
     "message":"Added permission to \/hub, \/lobby command\n \n[B]hubkick.command[\/B]"
   },
   {
     "id":"87",
     "resource_id":"2",
+    "download_count":261,
     "title":"Fixed commands",
     "message":"Fixed \/lobby \/hub commands not working."
   },
   {
     "id":"119",
     "resource_id":"2",
+    "download_count":971,
     "title":"Metrics",
     "message":"Added Metrics"
   }
