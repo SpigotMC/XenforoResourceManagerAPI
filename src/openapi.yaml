@@ -259,6 +259,11 @@ components:
           type: integer
         resource_version:
           type: string
+        download_url:
+          type: string
+          format: uri
+          default: ""
+          description: "Download URL for the update file, only present for external downloads"
         title:
           type: string
         message:
