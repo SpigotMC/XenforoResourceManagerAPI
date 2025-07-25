@@ -338,3 +338,7 @@ components:
         avatar:
           type: string
           format: uri
+        last_activity:
+          type: integer
+          nullable: true
+          description: "Last activity timestamp (in seconds)"

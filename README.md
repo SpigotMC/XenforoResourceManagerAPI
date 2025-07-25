@@ -385,7 +385,8 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
   "identities":{
     "twitter":"md__5"
   },
-  "avatar":"https:\/\/www.gravatar.com\/avatar\/b53fd878a84d268da2b6456e0b96cae5.jpg?s=96"
+  "avatar":"https:\/\/www.gravatar.com\/avatar\/b53fd878a84d268da2b6456e0b96cae5.jpg?s=96",
+  "last_activity":1753109208 
 }
 ```
 
@@ -404,6 +405,7 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
   "identities":{
     "discord":"simple#5957"
   },
-  "avatar":"https:\/\/www.spigotmc.org\/data\/avatars\/l\/12\/12157.jpg?1623588345"
+  "avatar":"https:\/\/www.spigotmc.org\/data\/avatars\/l\/12\/12157.jpg?1623588345",
+  "last_activity":1753109208
 }
 ```
