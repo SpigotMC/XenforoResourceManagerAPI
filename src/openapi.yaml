@@ -259,6 +259,8 @@ components:
           type: integer
         resource_version:
           type: string
+        download_count:
+          type: integer
         title:
           type: string
         message:
