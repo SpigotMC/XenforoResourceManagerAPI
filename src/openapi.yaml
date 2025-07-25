@@ -235,6 +235,12 @@ components:
             rating:
               type: number
               format: double
+        first_release:
+          type: integer
+          description: "first release date as timestamp (in seconds)"
+        last_update:
+          type: integer
+          description: "last update as timestamp (in seconds)"
         external_download_url:
           type: string
           format: uri
