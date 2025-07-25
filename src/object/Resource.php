@@ -24,9 +24,11 @@ class Resource {
         $this->tag = $resource['tag_line'];
         $this->current_version = $resource['version_string'];
 
-        $category = new \stdClass();
-        $category->id = $resource['resource_category_id'];
-        $category->title = $resource['category_title'];
+        $category = new ResourceCategory([
+            'resource_category_id' => $resource['resource_category_id'],
+            'category_title' => $resource['category_title'],
+            'category_description' => $resource['category_description']
+        ]);
         $this->category = $category;
 
         for ($idx = 0; $idx < count($resource['fields']); $idx++) {
