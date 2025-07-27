@@ -152,7 +152,7 @@ class Database {
     public function getUser($user_id) {
         if (!is_null($this->conn)) {
             $userStmt = $this->conn->prepare(
-                "SELECT u.user_id, u.username, u.resource_count, u.avatar_date, u.gravatar, up.allow_view_identities
+                "SELECT u.user_id, u.username, u.resource_count, u.avatar_date, u.gravatar, u.last_activity, u.visible, up.allow_view_profile, up.allow_view_identities
                 FROM xf_user u
                     INNER JOIN xf_user_privacy up
                         ON up.user_id = u.user_id
