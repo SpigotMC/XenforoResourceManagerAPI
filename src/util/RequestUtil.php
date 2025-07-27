@@ -74,6 +74,23 @@ class RequestUtil {
         return 1;
     }
 
+    public static function sorting() {
+        $value = $_GET['sort'] ?? NULL;
+
+        // Preconditions
+        if (is_null($value) || !is_string($value)) return NULL;
+
+        // Sorting methods
+        if(strcasecmp($value, 'asc') == 0) {
+            return 'asc';
+        } else if (strcasecmp($value, 'desc') == 0) {
+            return 'desc';
+        }
+
+        // Return default null. This allows different defaults per method.
+        return NULL;
+    }
+
     public static function category() {
         $value = $_GET['category'] ?? null;
 
