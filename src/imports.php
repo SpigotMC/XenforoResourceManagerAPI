@@ -9,6 +9,7 @@ require_once(__DIR__ . '/object/Error.php');
 require_once(__DIR__ . '/object/Resource.php');
 require_once(__DIR__ . '/object/ResourceCategory.php');
 require_once(__DIR__ . '/object/ResourceUpdate.php');
+require_once(__DIR__ . '/object/PaginationInfo.php');
 
 require_once(__DIR__ . '/support/Config.php');
 require_once(__DIR__ . '/support/Database.php');
