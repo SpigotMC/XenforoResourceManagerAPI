@@ -152,7 +152,7 @@ class Database {
     public function getUser($user_id) {
         if (!is_null($this->conn)) {
             $userStmt = $this->conn->prepare(
-                "SELECT u.user_id, u.username, u.resource_count, u.avatar_date, u.gravatar, up.allow_view_identities
+                "SELECT u.user_id, u.username, u.resource_count, u.avatar_date, u.gravatar, u.last_activity, u.visible, up.allow_view_profile, up.allow_view_identities
                 FROM xf_user u
                     INNER JOIN xf_user_privacy up
                         ON up.user_id = u.user_id
@@ -206,7 +206,7 @@ class Database {
 
     private function _resource($suffix) {
         return sprintf(
-            "SELECT r.resource_id, r.title, r.tag_line, r.user_id, r.username, r.price, r.currency, r.download_count, r.update_count, r.rating_count, r.review_count, r.rating_avg, r.icon_date, rv.version_string, rv.download_url, ru.message, rc.resource_category_id, rc.category_title
+            "SELECT r.resource_id, r.title, r.tag_line, r.user_id, r.username, r.price, r.currency, r.download_count, r.update_count, r.rating_count, r.review_count, r.rating_avg, r.icon_date, r.resource_date, r.last_update, rv.version_string, rv.download_url, ru.message, rc.resource_category_id, rc.category_title, rc.category_description
             FROM xf_resource r
                 INNER JOIN xf_resource_version rv
                     ON r.current_version_id = rv.resource_version_id
@@ -244,7 +244,7 @@ class Database {
 
     private function _resource_update($suffix) {
         return sprintf(
-            "SELECT r.resource_update_id, r.resource_id, rv.version_string, rv.download_url, r.title, r.message
+            "SELECT r.resource_update_id, r.resource_id, rv.version_string, rv.download_url, rv.download_count, r.title, r.message
             FROM xf_resource_update r
                 INNER JOIN xf_resource_version rv ON r.resource_update_id = rv.resource_update_id
             WHERE r.message_state = 'visible' %s",

@@ -16,6 +16,8 @@ class Resource {
     public $premium;
     public $stats;
     public $external_download_url;
+    public $first_release;
+    public $last_update;
     public $description;
 
     public function __construct($resource) {
@@ -24,9 +26,11 @@ class Resource {
         $this->tag = $resource['tag_line'];
         $this->current_version = $resource['version_string'];
 
-        $category = new \stdClass();
-        $category->id = $resource['resource_category_id'];
-        $category->title = $resource['category_title'];
+        $category = new ResourceCategory([
+            'resource_category_id' => $resource['resource_category_id'],
+            'category_title' => $resource['category_title'],
+            'category_description' => $resource['category_description']
+        ]);
         $this->category = $category;
 
         for ($idx = 0; $idx < count($resource['fields']); $idx++) {
@@ -71,6 +75,9 @@ class Resource {
         );
 
         $this->external_download_url = $resource['download_url'];
+
+        $this->first_release = $resource['resource_date'];
+        $this->last_update = $resource['last_update'];
 
         $this->description = $resource['message'];
     }

@@ -180,7 +180,7 @@ components:
         results:
           type: integer
         total_results:
-          type: integer   
+          type: integer
     Resource:
       type: object
       properties:
@@ -192,6 +192,8 @@ components:
           type: string
         current_version:
           type: string
+        category:
+          $ref: '#/components/schemas/ResourceCategory'
         native_minecraft_version:
           type: string
           nullable: true
@@ -233,6 +235,12 @@ components:
             rating:
               type: number
               format: double
+        first_release:
+          type: integer
+          description: "first release date as timestamp (in seconds)"
+        last_update:
+          type: integer
+          description: "last update as timestamp (in seconds)"
         external_download_url:
           type: string
           format: uri
@@ -259,6 +267,8 @@ components:
           type: integer
         resource_version:
           type: string
+        download_count:
+          type: integer
         download_url:
           type: string
           format: uri
@@ -333,3 +343,7 @@ components:
         avatar:
           type: string
           format: uri
+        last_activity:
+          type: integer
+          nullable: true
+          description: "Last activity timestamp (in seconds)"
