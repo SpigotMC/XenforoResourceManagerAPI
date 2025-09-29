@@ -120,12 +120,6 @@ paths:
         required: false
         schema:
           type: integer
-      - name: sort
-        description: The method to sort by (default 'asc')
-        in: query
-        required: false
-        schema:
-          type: string
     get:
       operationId: getResourceUpdates
       summary: Obtain all the updates to a resource
