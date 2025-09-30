@@ -1,9 +1,10 @@
 <?php namespace XFRM\Object;
 defined('_XFRM_API') or exit('No direct script access allowed here.');
 
-use \XFRM\Util\IconUtil as Icons;
+use XFRM\Util\IconUtil as Icons;
 
-class Resource {
+class Resource
+{
     public $id;
     public $title;
     public $tag;
@@ -20,7 +21,8 @@ class Resource {
     public $last_update;
     public $description;
 
-    public function __construct($resource) {
+    public function __construct($resource)
+    {
         $this->id = $resource['resource_id'];
         $this->title = $resource['title'];
         $this->tag = $resource['tag_line'];
@@ -42,13 +44,13 @@ class Resource {
                     break;
                 case 'mc_versions':
                     $versions = array_map(
-                        function($version) {
+                        function ($version) {
                             return self::cleanupVersion($version);
                         },
                         unserialize($field['actual_field_value'])
                     );
                     $this->supported_minecraft_versions = array_values($versions);
-                    break; 
+                    break;
             }
         }
 
@@ -82,7 +84,8 @@ class Resource {
         $this->description = $resource['message'];
     }
 
-    private static function cleanupVersion($value) {
+    private static function cleanupVersion($value)
+    {
         if (strtolower($value) != 'legacy') {
             $value = str_replace('_', '.', $value);
         }
