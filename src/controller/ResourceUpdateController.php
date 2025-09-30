@@ -23,14 +23,14 @@ class ResourceUpdateController {
     }
 
     public function getResourceUpdates() {
-        $out = array();
+        $out = [];
 
         if (Req::checkIdParam()) {
             $updates = $this->database->getResourceUpdates($_GET['id'], Req::page());
             if (is_null($updates)) return NULL;
 
             foreach ($updates as $update) {
-                array_push($out, new ResourceUpdate($update));
+                $out[] = new ResourceUpdate($update);
             }
         }
 

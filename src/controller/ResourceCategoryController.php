@@ -12,7 +12,7 @@ class ResourceCategoryController {
     }
     
     public function listResourceCategories() {
-        $out = array();
+        $out = [];
 
         $categories = $this->database->listResourceCategories();
 
@@ -21,7 +21,7 @@ class ResourceCategoryController {
         }
 
         foreach ($categories as $category) {
-            array_push($out, new ResourceCategory($category));
+            $out[] = new ResourceCategory($category);
         }
 
         return $out;

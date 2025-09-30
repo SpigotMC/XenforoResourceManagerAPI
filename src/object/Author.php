@@ -26,7 +26,7 @@ class Author {
             $this->last_activity = null;
         }
 
-        $this->identities = array();
+        $this->identities = [];
         if ($author['allow_view_identities'] == 'everyone') {
             for ($idx = 0; $idx < count($identities); $idx ++) {
                 $this->identities[$identities[$idx][0]] = $identities[$idx][1];
