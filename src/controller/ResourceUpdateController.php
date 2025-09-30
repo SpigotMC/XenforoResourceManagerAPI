@@ -4,14 +4,17 @@ defined('_XFRM_API') or exit('No direct script access allowed here.');
 use XFRM\Object\ResourceUpdate as ResourceUpdate;
 use XFRM\Util\RequestUtil as Req;
 
-class ResourceUpdateController {
+class ResourceUpdateController
+{
     private $database;
 
-    public function __construct($database) {
+    public function __construct($database)
+    {
         $this->database = $database;
     }
 
-    public function getResourceUpdate() {
+    public function getResourceUpdate()
+    {
         if (Req::checkIdParam()) {
             $update = $this->database->getResourceUpdate($_GET['id']);
             if (!is_null($update) && $update !== false) {
@@ -22,7 +25,8 @@ class ResourceUpdateController {
         return NULL;
     }
 
-    public function getResourceUpdates() {
+    public function getResourceUpdates()
+    {
         $out = array();
 
         if (Req::checkIdParam()) {

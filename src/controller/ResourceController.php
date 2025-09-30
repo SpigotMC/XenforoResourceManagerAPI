@@ -4,14 +4,17 @@ defined('_XFRM_API') or exit('No direct script access allowed here.');
 use XFRM\Object\Resource as Resource;
 use XFRM\Util\RequestUtil as Req;
 
-class ResourceController {
+class ResourceController
+{
     private $database;
 
-    public function __construct($database) {
+    public function __construct($database)
+    {
         $this->database = $database;
     }
-    
-    public function listResources() {
+
+    public function listResources()
+    {
         $out = array();
 
         $resources = $this->database->listResources(Req::category(), Req::page());
@@ -27,7 +30,8 @@ class ResourceController {
         return $out;
     }
 
-    public function getResource() {
+    public function getResource()
+    {
         if (Req::checkIdParam()) {
             $resource = $this->database->getResource(Req::id());
 
@@ -39,12 +43,13 @@ class ResourceController {
         return NULL;
     }
 
-    public function getResourcesByAuthor() {
+    public function getResourcesByAuthor()
+    {
         $out = array();
 
         if (Req::checkIdParam()) {
             $resources = $this->database->getResourcesByUser(Req::id(), Req::page());
-            
+
             if (is_null($resources)) {
                 return NULL;
             }

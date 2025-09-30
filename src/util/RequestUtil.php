@@ -7,8 +7,10 @@ use XFRM\Object\Error as Error;
  * These are navigation guards. They stop the app in its tracks if requirements
  * are not being met.
  */
-class RequestUtil {
-    public static function requestPreflight() {
+class RequestUtil
+{
+    public static function requestPreflight()
+    {
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
             echo new Error(403, "This API is read-only. Use GET.");
             exit();
@@ -22,11 +24,13 @@ class RequestUtil {
         return true;
     }
 
-    public static function id() {
+    public static function id()
+    {
         return $_GET['id'] ?? null;
     }
 
-    public static function checkIdParam() {
+    public static function checkIdParam()
+    {
         $id = self::id();
 
         if (is_null($id)) {
@@ -42,11 +46,13 @@ class RequestUtil {
         return true;
     }
 
-    public static function name() {
+    public static function name()
+    {
         return $_GET['name'] ?? null;
     }
 
-    public static function checkNameParam() {
+    public static function checkNameParam()
+    {
         $name = self::name();
 
         if (is_null($name)) {
@@ -64,7 +70,8 @@ class RequestUtil {
         return true;
     }
 
-    public static function page() {
+    public static function page()
+    {
         $value = $_GET['page'] ?? null;
 
         if (!is_null($value) && is_numeric($value) && $value > 0) {
@@ -74,7 +81,8 @@ class RequestUtil {
         return 1;
     }
 
-    public static function category() {
+    public static function category()
+    {
         $value = $_GET['category'] ?? null;
 
         if (!is_null($value) && is_numeric($value)) {
