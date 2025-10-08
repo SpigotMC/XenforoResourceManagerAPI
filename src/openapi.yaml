@@ -240,13 +240,11 @@ components:
         source_code_url:
           type: string
           format: uri
-          default: null
-          nullable: true
+          default: ""
         donate_url:
           type: string
           format: uri
-          default: null
-          nullable: true
+          default: ""
     ResourceUpdate:
       type: object
       properties:
