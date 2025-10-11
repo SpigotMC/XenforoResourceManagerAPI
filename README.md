@@ -326,6 +326,7 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
 {
   "id":"352711",
   "resource_id":"6245",
+  "resource_version":"2.10.9",  
   "download_count":282429,
   "post_date":1596535200,
   "title":"2.10.9 back to normal",
@@ -346,6 +347,7 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
   {
     "id":"2",
     "resource_id":"2",
+    "resource_version":"1.0",
     "download_count":251,
     "post_date":1364382000,  
     "title":"HubKick",
@@ -354,6 +356,7 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
   {
     "id":"17",
     "resource_id":"2",
+    "resource_version":"1.2.0",  
     "download_count":346,
     "post_date":1364468400,  
     "title":"Added \/lobby|\/hub command",
@@ -362,6 +365,7 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
   {
     "id":"66",
     "resource_id":"2",
+    "resource_version":"1.3.0",  
     "download_count":298,  
     "post_date":1365760800,  
     "title":"Added permission",
@@ -370,6 +374,7 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
   {
     "id":"87",
     "resource_id":"2",
+    "resource_version":"1.3.2",
     "download_count":261,
     "post_date":1366279200,  
     "title":"Fixed commands",
@@ -378,6 +383,7 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
   {
     "id":"119",
     "resource_id":"2",
+    "resource_version":"1.3.4",
     "download_count":971,
     "post_date":1366884000,  
     "title":"Metrics",
