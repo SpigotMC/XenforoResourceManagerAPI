@@ -256,6 +256,9 @@ components:
           type: string
         download_count:
           type: integer
+        post_date:
+          type: integer
+          description: "post date as timestamp (in seconds)"
         title:
           type: string
         message:
