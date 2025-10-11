@@ -19,6 +19,8 @@ class Resource {
     public $first_release;
     public $last_update;
     public $description;
+    public $source_code_url;
+    public $donate_url;
 
     public function __construct($resource) {
         $this->id = $resource['resource_id'];
@@ -42,13 +44,19 @@ class Resource {
                     break;
                 case 'mc_versions':
                     $versions = array_map(
-                        function($version) {
+                        function ($version) {
                             return self::cleanupVersion($version);
                         },
                         unserialize($field['actual_field_value'])
                     );
                     $this->supported_minecraft_versions = array_values($versions);
-                    break; 
+                    break;
+                case 'source_code':
+                    $this->source_code_url = $field['actual_field_value'];
+                    break;
+                case 'donate_link':
+                    $this->donate_url = $field['actual_field_value'];
+                    break;
             }
         }
 

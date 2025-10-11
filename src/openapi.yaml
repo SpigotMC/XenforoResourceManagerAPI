@@ -237,6 +237,14 @@ components:
           default: ""
         description:
           type: string
+        source_code_url:
+          type: string
+          format: uri
+          default: ""
+        donate_url:
+          type: string
+          format: uri
+          default: ""
     ResourceUpdate:
       type: object
       properties:
