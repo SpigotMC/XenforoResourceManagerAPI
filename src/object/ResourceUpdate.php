@@ -7,6 +7,7 @@ class ResourceUpdate
     public $resource_id;
     public $resource_version;
     public $download_count;
+    public $post_date;
     public $title;
     public $message;
 
@@ -16,6 +17,7 @@ class ResourceUpdate
         $this->resource_id = $update['resource_id'];
         $this->resource_version = $update['version_string'];
         $this->download_count = $update['download_count'];
+        $this->post_date = $update['post_date'];
         $this->title = $update['title'];
         $this->message = $update['message'];
     }

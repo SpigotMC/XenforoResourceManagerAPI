@@ -237,6 +237,14 @@ components:
           default: ""
         description:
           type: string
+        source_code_url:
+          type: string
+          format: uri
+          default: ""
+        donate_url:
+          type: string
+          format: uri
+          default: ""
     ResourceUpdate:
       type: object
       properties:
@@ -248,6 +256,9 @@ components:
           type: string
         download_count:
           type: integer
+        post_date:
+          type: integer
+          description: "post date as timestamp (in seconds)"
         title:
           type: string
         message:
