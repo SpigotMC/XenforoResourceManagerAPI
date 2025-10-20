@@ -3,8 +3,10 @@ defined('_XFRM_API') or exit('No direct script access allowed here.');
 
 use XFRM\Support\Config as Config;
 
-class IconUtil {
-    public static function getResourceIcon($resource_id, $icon_date) {
+class IconUtil
+{
+    public static function getResourceIcon($resource_id, $icon_date)
+    {
         $iconUrl = '';
 
         if ($icon_date == 0) {
@@ -17,7 +19,8 @@ class IconUtil {
         return $iconUrl;
     }
 
-    public static function getUserIcon($user_id, $avatar_date, $gravatar) {
+    public static function getUserIcon($user_id, $avatar_date, $gravatar)
+    {
         $iconUrl = '';
 
         $gravatar_hash = empty($gravatar) ? '' : strtolower(md5(strtolower(trim($gravatar))));

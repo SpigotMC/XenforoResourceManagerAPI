@@ -1,29 +1,31 @@
 <?php namespace XFRM\Support;
 defined('_XFRM_API') or exit('No direct script access allowed here.');
 
-use XFRM\Support\Database as Database;
-use XFRM\Controller\ResourceController as ResourceController;
-use XFRM\Controller\ResourceCategoryController as ResourceCategoryController;
-use XFRM\Controller\ResourceUpdateController as ResourceUpdateController;
 use XFRM\Controller\AuthorController as AuthorController;
+use XFRM\Controller\ResourceCategoryController as ResourceCategoryController;
+use XFRM\Controller\ResourceController as ResourceController;
+use XFRM\Controller\ResourceUpdateController as ResourceUpdateController;
 use XFRM\Object\Error as Error;
+use XFRM\Support\Database as Database;
 
-class Router {
+class Router
+{
     private $actions;
     private $resourceController;
     private $resourceCategoryController;
     private $resourceUpdateController;
     private $authorController;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->actions = array(
-            "listResources", 
-            "getResource", 
-            "getResourcesByAuthor", 
-            "listResourceCategories", 
-            "getResourceUpdate", 
-            "getResourceUpdates", 
-            "getAuthor", 
+            "listResources",
+            "getResource",
+            "getResourcesByAuthor",
+            "listResourceCategories",
+            "getResourceUpdate",
+            "getResourceUpdates",
+            "getAuthor",
             "findAuthor"
         );
 
@@ -35,7 +37,8 @@ class Router {
         $this->authorController = new AuthorController($database);
     }
 
-    public function route() {
+    public function route()
+    {
         $action = $_GET['action'];
 
         if (!in_array($action, $this->actions)) {
@@ -43,39 +46,47 @@ class Router {
             echo new Error(400, "Invalid action. Valid actions: $validActions");
             exit();
         }
-        
+
         return $this->$action();
     }
 
-    private function listResources() {
+    private function listResources()
+    {
         return $this->resourceController->listResources();
     }
 
-    private function getResource() {
+    private function getResource()
+    {
         return $this->resourceController->getResource();
     }
 
-    private function getResourcesByAuthor() {
+    private function getResourcesByAuthor()
+    {
         return $this->resourceController->getResourcesByAuthor();
     }
 
-    private function listResourceCategories() {
+    private function listResourceCategories()
+    {
         return $this->resourceCategoryController->listResourceCategories();
     }
 
-    private function getResourceUpdate() {
+    private function getResourceUpdate()
+    {
         return $this->resourceUpdateController->getResourceUpdate();
     }
 
-    private function getResourceUpdates() {
+    private function getResourceUpdates()
+    {
         return $this->resourceUpdateController->getResourceUpdates();
     }
 
-    private function getAuthor() {
+    private function getAuthor()
+    {
         return $this->authorController->getAuthor();
     }
 
-    private function findAuthor() {
+    private function findAuthor()
+    {
         return $this->authorController->findAuthor();
     }
 }

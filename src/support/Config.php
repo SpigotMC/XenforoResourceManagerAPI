@@ -1,7 +1,8 @@
 <?php namespace XFRM\Support;
 defined('_XFRM_API') or exit('No direct script access allowed here.');
 
-class Config {
+class Config
+{
     public static $data = array(
         // XenForo database
         'MYSQL_USERNAME' => 'root',
