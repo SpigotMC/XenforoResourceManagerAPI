@@ -16,7 +16,7 @@ class Router {
     private $authorController;
 
     public function __construct() {
-        $this->actions = array(
+        $this->actions = [
             "listResources", 
             "getResource", 
             "getResourcesByAuthor", 
@@ -25,7 +25,7 @@ class Router {
             "getResourceUpdates", 
             "getAuthor", 
             "findAuthor"
-        );
+        ];
 
         $database = Database::initializeViaConfig();
 

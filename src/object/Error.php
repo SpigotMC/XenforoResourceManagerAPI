@@ -7,10 +7,10 @@ class Error extends JsonResponse {
     private $code;
 
     public function __construct($code, $message) {
-        parent::__construct(array(
+        parent::__construct([
             "code" => $code,
             "message" => $message
-        ));
+        ]);
 
         $this->code = $code;
     }

@@ -12,7 +12,7 @@ class ResourceController {
     }
     
     public function listResources() {
-        $out = array();
+        $out = [];
 
         $resources = $this->database->listResources(Req::category(), Req::page());
 
@@ -21,7 +21,7 @@ class ResourceController {
         }
 
         foreach ($resources as $resource) {
-            array_push($out, new Resource($resource));
+            $out[] = new Resource($resource);
         }
 
         return $out;
@@ -40,7 +40,7 @@ class ResourceController {
     }
 
     public function getResourcesByAuthor() {
-        $out = array();
+        $out = [];
 
         if (Req::checkIdParam()) {
             $resources = $this->database->getResourcesByUser(Req::id(), Req::page());
@@ -50,7 +50,7 @@ class ResourceController {
             }
 
             foreach ($resources as $resource) {
-                array_push($out, new Resource($resource));
+                $out[] = new Resource($resource);
             }
         }
 
