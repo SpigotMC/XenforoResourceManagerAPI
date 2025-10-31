@@ -64,25 +64,25 @@ class Resource
 
         $this->icon_link = Icons::getResourceIcon($this->id, $resource['icon_date']);
 
-        $this->author = array(
+        $this->author = [
             'id' => $resource['user_id'],
             'username' => $resource['username']
-        );
+        ];
 
-        $this->premium = array(
+        $this->premium = [
             'price' => $resource['price'],
             'currency' => $resource['currency']
-        );
+        ];
 
-        $this->stats = array(
+        $this->stats = [
             'downloads' => $resource['download_count'],
             'updates' => $resource['update_count'],
-            'reviews' => array(
+            'reviews' => [
                 'unique' => $resource['rating_count'],
                 'total' => $resource['review_count']
-            ),
+            ],
             'rating' => strval(round($resource['rating_avg'], 1))
-        );
+        ];
 
         $this->external_download_url = $resource['download_url'];
 

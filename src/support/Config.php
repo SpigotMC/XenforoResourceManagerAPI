@@ -3,7 +3,7 @@ defined('_XFRM_API') or exit('No direct script access allowed here.');
 
 class Config
 {
-    public static $data = array(
+    public static $data = [
         // XenForo database
         'MYSQL_USERNAME' => 'root',
         'MYSQL_PASSWORD' => 'root',
@@ -16,5 +16,5 @@ class Config
 
         // set PUBLIC_PATH_STATIC to the static asset site, including trailing slash
         'PUBLIC_PATH_STATIC' => "https://static.spigotmc.org/"
-    );
+    ];
 }
