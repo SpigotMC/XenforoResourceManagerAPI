@@ -43,12 +43,10 @@ class Database {
 
         if (!is_null($this->conn)) {
             $categoryClause = is_null($category) ? '' : 'AND r.resource_category_id = :resource_category_id';
-            
-            $resStmt = $this->conn->prepare($this->_resource(sprintf('%s LIMIT 10 OFFSET :offset', $categoryClause)));
-            $resStmt->bindParam(':offset', $page, \PDO::PARAM_INT);
-            
+            $resStmt = $this->_resource($categoryClause, 10, $page);
+
             if (!empty($categoryClause)) {
-                $resStmt->bindParam(':resource_category_id', $category);   
+                $resStmt->bindParam(':resource_category_id', $category);
             }
 
             if ($resStmt->execute()) {
@@ -69,7 +67,8 @@ class Database {
 
     public function getResource($resource_id) {
         if (!is_null($this->conn)) {
-            $resStmt = $this->conn->prepare($this->_resource('AND r.resource_id = :resource_id LIMIT 1'));
+            $resourceClause = 'AND r.resource_id = :resource_id';
+            $resStmt = $this->_resource($resourceClause);
             $resStmt->bindParam(':resource_id', $resource_id);
 
             if ($resStmt->execute()) {
@@ -88,13 +87,13 @@ class Database {
         $page = $page == 1 ? 0 : 10 * ($page - 1);
 
         if (!is_null($this->conn)) {
-            $resStmt = $this->conn->prepare($this->_resource('AND r.user_id = :user_id LIMIT 10 OFFSET :offset'));
+            $userClause = 'AND r.user_id = :user_id';
+            $resStmt = $this->_resource($userClause, 10, $page);
             $resStmt->bindParam(':user_id', $user_id);
-            $resStmt->bindParam(':offset', $page, \PDO::PARAM_INT);
 
             if ($resStmt->execute()) {
                 $resources = $resStmt->fetchAll();
-                
+
                 for ($i = 0; $i < count($resources); $i++) {
                     $resource = $resources[$i];
                     $resource['fields'] = $this->_resource_fields($resource['resource_id']);
@@ -204,8 +203,11 @@ class Database {
         return NULL;
     }
 
-    private function _resource($suffix) {
-        return sprintf(
+    private function _resource($additional_where_clauses, $limit = 1, $offset = null)
+    {
+        $offsetClause = is_null($offset) ? '' : 'OFFSET :offset';
+
+        $query = sprintf(
             "SELECT r.resource_id, r.title, r.tag_line, r.user_id, r.username, r.price, r.currency, r.download_count, r.update_count, r.rating_count, r.review_count, r.rating_avg, r.icon_date, r.resource_date, r.last_update, rv.version_string, rv.download_url, ru.message, rc.resource_category_id, rc.category_title, rc.category_description
             FROM xf_resource r
                 INNER JOIN xf_resource_version rv 
@@ -214,9 +216,19 @@ class Database {
                     ON r.description_update_id = ru.resource_update_id
                 INNER JOIN xf_resource_category rc
                     ON r.resource_category_id = rc.resource_category_id
-            WHERE r.resource_state = 'visible' %s",
-            $suffix
+            WHERE r.resource_state = 'visible' %s LIMIT :limit %s",
+            $additional_where_clauses,
+            $offsetClause
         );
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':limit', $limit, \PDO::PARAM_INT);
+
+        if (!is_null($offset)) {
+            $stmt->bindParam(':offset', $offset, \PDO::PARAM_INT);
+        }
+
+        return $stmt;
     }
 
     private function _resource_fields($resource_id) {
