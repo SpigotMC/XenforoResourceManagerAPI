@@ -1,9 +1,10 @@
 <?php namespace XFRM\Object;
 defined('_XFRM_API') or exit('No direct script access allowed here.');
 
-use \XFRM\Util\IconUtil as Icons;
+use XFRM\Util\IconUtil as Icons;
 
-class Resource {
+class Resource
+{
     public $id;
     public $title;
     public $tag;
@@ -22,7 +23,8 @@ class Resource {
     public $source_code_url;
     public $donate_url;
 
-    public function __construct($resource) {
+    public function __construct($resource)
+    {
         $this->id = $resource['resource_id'];
         $this->title = $resource['title'];
         $this->tag = $resource['tag_line'];
@@ -90,7 +92,8 @@ class Resource {
         $this->description = $resource['message'];
     }
 
-    private static function cleanupVersion($value) {
+    private static function cleanupVersion($value)
+    {
         if (strtolower($value) != 'legacy') {
             $value = str_replace('_', '.', $value);
         }

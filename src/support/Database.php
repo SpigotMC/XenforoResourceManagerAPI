@@ -3,10 +3,12 @@ defined('_XFRM_API') or exit('No direct script access allowed here.');
 
 use XFRM\Support\Config as Config;
 
-class Database {
+class Database
+{
     private $conn;
 
-    public function __construct($username, $password, $hostname, $port, $database) {
+    public function __construct($username, $password, $hostname, $port, $database)
+    {
         try {
             $this->conn = new \PDO(
                 sprintf(
@@ -28,7 +30,8 @@ class Database {
         }
     }
 
-    public static function initializeViaConfig() {
+    public static function initializeViaConfig()
+    {
         return new Database(
             Config::$data['MYSQL_USERNAME'],
             Config::$data['MYSQL_PASSWORD'],
@@ -38,7 +41,8 @@ class Database {
         );
     }
 
-    public function listResources($category, $page) {
+    public function listResources($category, $page)
+    {
         $page = $page == 1 ? 0 : 10 * ($page - 1);
 
         if (!is_null($this->conn)) {
@@ -65,7 +69,8 @@ class Database {
         return NULL;
     }
 
-    public function getResource($resource_id) {
+    public function getResource($resource_id)
+    {
         if (!is_null($this->conn)) {
             $resourceClause = 'AND r.resource_id = :resource_id';
             $resStmt = $this->_resource($resourceClause);
@@ -83,7 +88,8 @@ class Database {
         return NULL;
     }
 
-    public function getResourcesByUser($user_id, $page) {
+    public function getResourcesByUser($user_id, $page)
+    {
         $page = $page == 1 ? 0 : 10 * ($page - 1);
 
         if (!is_null($this->conn)) {
@@ -107,7 +113,8 @@ class Database {
         return NULL;
     }
 
-    public function listResourceCategories() {
+    public function listResourceCategories()
+    {
         if (!is_null($this->conn)) {
             $catStmt = $this->conn->prepare("SELECT resource_category_id, category_title, category_description FROM xf_resource_category");
 
@@ -119,7 +126,8 @@ class Database {
         return NULL;
     }
 
-    public function getResourceUpdate($update_id) {
+    public function getResourceUpdate($update_id)
+    {
         if (!is_null($this->conn)) {
             $updateStmt = $this->conn->prepare($this->_resource_update('AND r.resource_update_id = :resource_update_id LIMIT 1'));
             $updateStmt->bindParam(':resource_update_id', $update_id);
@@ -132,7 +140,8 @@ class Database {
         return NULL;
     }
 
-    public function getResourceUpdates($resource_id, $page) {
+    public function getResourceUpdates($resource_id, $page)
+    {
         $page = $page == 1 ? 0 : 10 * ($page - 1);
 
         if (!is_null($this->conn)) {
@@ -148,7 +157,8 @@ class Database {
         return NULL;
     }
 
-    public function getUser($user_id) {
+    public function getUser($user_id)
+    {
         if (!is_null($this->conn)) {
             $userStmt = $this->conn->prepare(
                 "SELECT u.user_id, u.username, u.resource_count, u.avatar_date, u.gravatar, u.last_activity, u.visible, up.allow_view_profile, up.allow_view_identities
@@ -187,7 +197,8 @@ class Database {
         return NULL;
     }
 
-    public function findUser($username) {
+    public function findUser($username)
+    {
         if (!is_null($this->conn)) {
             $userIdStmt = $this->conn->prepare("SELECT user_id FROM xf_user WHERE username = :username LIMIT 1");
             $userIdStmt->bindParam(':username', $username);
@@ -231,7 +242,8 @@ class Database {
         return $stmt;
     }
 
-    private function _resource_fields($resource_id) {
+    private function _resource_fields($resource_id)
+    {
         if (!is_null($this->conn)) {
             $fieldsStmt = $this->conn->prepare(
                 "SELECT rfv.field_id, rfv.field_value as actual_field_value, rf.field_choices as possible_field_values
@@ -254,7 +266,8 @@ class Database {
         return NULL;
     }
 
-    private function _resource_update($suffix) {
+    private function _resource_update($suffix)
+    {
         return sprintf(
             "SELECT r.resource_update_id, r.resource_id, rv.version_string, rv.download_count, r.post_date, r.title, r.message
             FROM xf_resource_update r
