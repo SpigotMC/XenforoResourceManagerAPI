@@ -227,7 +227,11 @@ class Database
                     ON r.description_update_id = ru.resource_update_id
                 INNER JOIN xf_resource_category rc
                     ON r.resource_category_id = rc.resource_category_id
-            WHERE r.resource_state = 'visible' %s LIMIT :limit %s",
+            WHERE r.resource_state = 'visible' 
+                  %s
+            ORDER BY r.resource_id ASC
+            LIMIT :limit 
+            %s",
             $additional_where_clauses,
             $offsetClause
         );
