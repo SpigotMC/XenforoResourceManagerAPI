@@ -25,6 +25,8 @@ class Router
             "listResourceCategories",
             "getResourceUpdate",
             "getResourceUpdates",
+            "getResourcePurchases",
+            "getResourcePurchaseByUser",
             "getAuthor",
             "findAuthor"
         ];
@@ -78,6 +80,16 @@ class Router
     private function getResourceUpdates()
     {
         return $this->resourceUpdateController->getResourceUpdates();
+    }
+
+    private function getResourcePurchases()
+    {
+        return $this->resourceController->getResourcePurchases();
+    }
+
+    private function getResourcePurchaseByUser()
+    {
+        return $this->resourceController->getResourcePurchaseByUser();
     }
 
     private function getAuthor()

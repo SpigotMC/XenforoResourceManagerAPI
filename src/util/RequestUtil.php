@@ -70,6 +70,57 @@ class RequestUtil
         return true;
     }
 
+    public static function userId()
+    {
+        $userId = $_GET['user_id'] ?? NULL;
+        if (is_numeric($userId) && $userId > 0) {
+            return $userId;
+        }
+        return NULL;
+    }
+
+    public static function checkUserIdParam() {
+        if (is_null(self::userId())) {
+            echo new Error(400, "User ID not specified. Please specify.");
+            exit();
+        }
+        return true;
+    }
+
+    public static function apiKey()
+    {
+        // getallheaders (apache_request_headers) is supported by the majority of runtimes now (FPM, CGI, nginx, etc.)
+        // given headers are by spec case-insensitive, the array keys will be made lowercase to easily access the value by name.
+        $header = array_change_key_case(getallheaders())['x-api-key'];
+        if (!empty($header)) {
+            return $header;
+        }
+        return NULL;
+    }
+
+    /**
+     * Validates the existence and format of the API-Key <b>without</b> validating its validity.
+     * Making sure that the API Key is valid should be done additionally to retrieve the actual owner of the key.
+     * @return true|void
+     */
+    public static function checkApiKeyParam()
+    {
+        $apiKey = self::apiKey();
+
+        if (is_null($apiKey)) {
+            echo new Error(400, "API Key not specified. Must be provided as X-API-Key header.");
+            exit();
+        }
+
+        // regex matching current API key format (sha256 hash of 32 random bytes in hexadecimal format) as specified in
+        // https://github.com/SpigotMC/XenforoApiKeys/blob/main/upload/library/XenforoApiKeys/Model/ApiKey.php#L71
+        if (!preg_match("/^[0-9a-fA-F]{64}$/", $apiKey)) {
+            echo new Error(401, "Invalid API Key.");
+            exit();
+        }
+        return true;
+    }
+
     public static function page()
     {
         $value = $_GET['page'] ?? null;
