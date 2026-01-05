@@ -29,6 +29,12 @@ class RequestUtil
         return $_GET['id'] ?? null;
     }
 
+    /**
+     * Checks if the 'id' parameter is present and valid.
+     * Exits with an error message if not.
+     *
+     * @return void
+     */
     public static function checkIdParam()
     {
         $id = self::id();
@@ -42,8 +48,6 @@ class RequestUtil
             echo new Error(400, "Invalid ID. ID must be numeric.");
             exit();
         }
-
-        return true;
     }
 
     public static function name()
@@ -51,6 +55,12 @@ class RequestUtil
         return $_GET['name'] ?? null;
     }
 
+    /**
+     * Checks if the 'name' parameter is present and valid.
+     * Exits with an error message if not.
+     *
+     * @return void
+     */
     public static function checkNameParam()
     {
         $name = self::name();
@@ -66,8 +76,6 @@ class RequestUtil
             echo new Error(400, "Invalid name. Name must be at 3-24 characters in length and consist of letters, numbers, and/or a limited set of special characters (_, -, ., and/or one or more spaces).");
             exit();
         }
-
-        return true;
     }
 
     public static function page()

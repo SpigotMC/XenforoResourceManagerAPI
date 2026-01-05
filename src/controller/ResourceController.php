@@ -32,12 +32,11 @@ class ResourceController
 
     public function getResource()
     {
-        if (Req::checkIdParam()) {
-            $resource = $this->database->getResource(Req::id());
+        Req::checkIdParam();
 
-            if (!is_null($resource) && $resource !== false) {
-                return new Resource($resource);
-            }
+        $resource = $this->database->getResource(Req::id());
+        if (!is_null($resource) && $resource !== false) {
+            return new Resource($resource);
         }
 
         return NULL;
@@ -45,18 +44,16 @@ class ResourceController
 
     public function getResourcesByAuthor()
     {
+        Req::checkIdParam();
+
+        $resources = $this->database->getResourcesByUser(Req::id(), Req::page());
+        if (is_null($resources)) {
+            return NULL;
+        }
+
         $out = [];
-
-        if (Req::checkIdParam()) {
-            $resources = $this->database->getResourcesByUser(Req::id(), Req::page());
-
-            if (is_null($resources)) {
-                return NULL;
-            }
-
-            foreach ($resources as $resource) {
-                $out[] = new Resource($resource);
-            }
+        foreach ($resources as $resource) {
+            $out[] = new Resource($resource);
         }
 
         return $out;
