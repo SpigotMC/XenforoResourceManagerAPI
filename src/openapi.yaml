@@ -252,6 +252,8 @@ components:
           type: integer
         resource_id:
           type: integer
+        version_id:
+          type: integer
         resource_version:
           type: string
         download_count:
