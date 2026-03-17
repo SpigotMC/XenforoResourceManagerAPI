@@ -326,6 +326,7 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
 {
   "id":"352711",
   "resource_id":"6245",
+  "version_id":"348709",
   "resource_version":"2.10.9",  
   "download_count":282429,
   "post_date":1596535200,
@@ -347,6 +348,7 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
   {
     "id":"2",
     "resource_id":"2",
+    "version_id":"2",
     "resource_version":"1.0",
     "download_count":251,
     "post_date":1364382000,  
@@ -356,6 +358,7 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
   {
     "id":"17",
     "resource_id":"2",
+    "version_id":"18",
     "resource_version":"1.2.0",  
     "download_count":346,
     "post_date":1364468400,  
@@ -365,6 +368,7 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
   {
     "id":"66",
     "resource_id":"2",
+    "version_id":"67",
     "resource_version":"1.3.0",  
     "download_count":298,  
     "post_date":1365760800,  
@@ -374,6 +378,7 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
   {
     "id":"87",
     "resource_id":"2",
+    "version_id":"88",
     "resource_version":"1.3.2",
     "download_count":261,
     "post_date":1366279200,  
@@ -383,6 +388,7 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
   {
     "id":"119",
     "resource_id":"2",
+    "version_id":"120",
     "resource_version":"1.3.4",
     "download_count":971,
     "post_date":1366884000,  
