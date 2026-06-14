@@ -129,7 +129,7 @@ class Database
     public function getResourceUpdate($update_id)
     {
         if (!is_null($this->conn)) {
-            $updateStmt = $this->conn->prepare($this->_resource_update('AND r.resource_update_id = :resource_update_id LIMIT 1'));
+            $updateStmt = $this->_resource_update('AND r.resource_update_id = :resource_update_id');
             $updateStmt->bindParam(':resource_update_id', $update_id);
 
             if ($updateStmt->execute()) {
@@ -145,9 +145,8 @@ class Database
         $page = $page == 1 ? 0 : 10 * ($page - 1);
 
         if (!is_null($this->conn)) {
-            $updatesStmt = $this->conn->prepare($this->_resource_update('AND r.resource_id = :resource_id LIMIT 10 OFFSET :offset'));
+            $updatesStmt = $this->_resource_update('AND r.resource_id = :resource_id', 10, $page);
             $updatesStmt->bindParam(':resource_id', $resource_id);
-            $updatesStmt->bindParam(':offset', $page, \PDO::PARAM_INT);
 
             if ($updatesStmt->execute()) {
                 return $updatesStmt->fetchAll();
@@ -270,14 +269,30 @@ class Database
         return NULL;
     }
 
-    private function _resource_update($suffix)
+    private function _resource_update($additional_where_clauses, $limit = 1, $offset = null)
     {
-        return sprintf(
-            "SELECT r.resource_update_id, r.resource_id, rv.resource_version_id, rv.version_string, rv.download_count, r.post_date, r.title, r.message
+        $offsetClause = is_null($offset) ? '' : 'OFFSET :offset';
+
+        $query = sprintf(
+            "SELECT r.resource_update_id, r.resource_id,  rv.resource_version_id, rv.version_string, rv.download_count, r.post_date, r.title, r.message
             FROM xf_resource_update r
                 INNER JOIN xf_resource_version rv ON r.resource_update_id = rv.resource_update_id
-            WHERE r.message_state = 'visible' AND rv.version_state = 'visible' %s",
-            $suffix
+            WHERE r.message_state = 'visible' AND rv.version_state = 'visible' 
+                %s
+            ORDER BY r.resource_update_id ASC
+            LIMIT :limit 
+            %s",
+            $additional_where_clauses,
+            $offsetClause
         );
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':limit', $limit, \PDO::PARAM_INT);
+
+        if (!is_null($offset)) {
+            $stmt->bindParam(':offset', $offset, \PDO::PARAM_INT);
+        }
+
+        return $stmt;
     }
 }
