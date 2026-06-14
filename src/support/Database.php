@@ -274,7 +274,7 @@ class Database
         $offsetClause = is_null($offset) ? '' : 'OFFSET :offset';
 
         $query = sprintf(
-            "SELECT r.resource_update_id, r.resource_id,  rv.resource_version_id, rv.version_string, rv.download_count, r.post_date, r.title, r.message
+            "SELECT r.resource_update_id, r.resource_id, rv.resource_version_id, rv.version_string, rv.download_count, r.post_date, r.title, r.message
             FROM xf_resource_update r
                 INNER JOIN xf_resource_version rv ON r.resource_update_id = rv.resource_update_id
             WHERE r.message_state = 'visible' AND rv.version_state = 'visible' 
