@@ -30,7 +30,7 @@ class Database
         }
     }
 
-    public static function initializeViaConfig()
+    public static function initializeViaConfig(): Database
     {
         return new Database(
             Config::$data['MYSQL_USERNAME'],
@@ -156,6 +156,46 @@ class Database
         return NULL;
     }
 
+    public function getResourcePurchases($resource_id, $page)
+    {
+        $page = $page == 1 ? 0 : 10 * ($page - 1);
+        if (is_null($this->conn)) {
+            return NULL;
+        }
+        // TODO: I have no clue how the tables look like
+        $statement = $this->conn->prepare(
+            "SELECT whatever 
+                        FROM xf_resource_XXXXX 
+                    WHERE resource_id = :resource_id 
+                    LIMIT 10 OFFSET :offset"
+        );
+        $statement->bindParam(':resource_id', $resource_id);
+        $statement->bindParam(':offset', $page, \PDO::PARAM_INT);
+        if ($statement->execute()) {
+            return $statement->fetchAll();
+        }
+        return NULL;
+    }
+
+    public function getResourcePurchaseByUser($resource_id, $user_id)
+    {
+        if (is_null($this->conn)) {
+            return NULL;
+        }
+        // TODO: I (still) have no clue how the tables look like
+        $statement = $this->conn->prepare(
+            "SELECT whatever, something_else
+                        FROM xf_resource_XXXXX 
+                    WHERE resource_id = :resource_id AND purchaser_id = :user_id"
+        );
+        $statement->bindParam(':resource_id', $resource_id);
+        $statement->bindParam(':user_id', $user_id);
+        if ($statement->execute()) {
+            return $statement->fetch();
+        }
+        return NULL;
+    }
+
     public function getUser($user_id)
     {
         if (!is_null($this->conn)) {
@@ -210,6 +250,26 @@ class Database
             }
         }
 
+        return NULL;
+    }
+
+    /**
+     * @param string $apiKey
+     * @return integer|null
+     */
+    public function getApiKeyOwnerId(string $apiKey)
+    {
+        if (is_null($this->conn)) {
+            return NULL;
+        }
+        $statement = $this->conn->prepare("SELECT user_id FROM xf_api_keys WHERE key = :key LIMIT 1");
+        $statement->bindParam(':key', $apiKey);
+        if ($statement->execute()) {
+            $fetched = $statement->fetch();
+            if (!is_null($fetched) && $fetched !== false) {
+                return $fetched['user_id'];
+            }
+        }
         return NULL;
     }
 

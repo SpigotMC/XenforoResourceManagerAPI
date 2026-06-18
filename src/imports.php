@@ -16,6 +16,7 @@ require_once(__DIR__ . '/support/Router.php');
 
 require_once(__DIR__ . '/util/IconUtil.php');
 require_once(__DIR__ . '/util/RequestUtil.php');
+require_once(__DIR__ . '/util/ApiKeyUtil.php');
 
 require_once(__DIR__ . '/controller/AuthorController.php');
 require_once(__DIR__ . '/controller/ResourceController.php');

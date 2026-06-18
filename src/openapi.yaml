@@ -132,6 +132,70 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ResourceUpdate'
+  /index.php?action=getResourcePurchases:
+    parameters:
+      - name: id
+        description: The resource ID
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: page
+        description: The page of results to get
+        in: query
+        required: false
+        schema:
+          type: integer
+    get:
+      operationId: getResourcePurchases
+      summary: Obtain all purchases of a (premium) resource
+      security:
+        - apiKeyAuthorization: [ ]
+      responses:
+        '200':
+          description: An object containing an array with all purchases / purchasers of the resources
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ResourcePurchase'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+  /index.php?action=getResourcePurchaseByUser:
+    parameters:
+      - name: id
+        description: The resource ID
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: user_id
+        description: The id of the purchaser
+        in: query
+        required: true
+        schema:
+          type: integer
+    get:
+      operationId: getResourcePurchaseByUser
+      summary: Obtain the details of a purchase made by a specific user for a (premium) resource
+      security:
+        - apiKeyAuthorization: [ ]
+      responses:
+        '200':
+          description: An object containing the details of the purchases of the resources
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourcePurchase'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          description: The specified user did not buy the resource.
   /index.php?action=getAuthor:
     parameters:
       - name: id
@@ -169,6 +233,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/Author'
 components:
+  securitySchemes:
+    apiKeyAuthorization:
+      type: apiKey
+      in: header
+      name: X-API-Key
+  responses:
+    UnauthorizedError:
+      description: Invalid API Key
+    ForbiddenError:
+      description: No permission to access the resource (API Key does not permit access to given resource).
   schemas:
     Resource:
       type: object
@@ -274,6 +348,15 @@ components:
           type: string
         description:
           type: string
+    ResourcePurchase:
+      type: object
+      properties:
+        resource_id:
+          type: integer
+          description: The ID of the purchases resource
+        user_id:
+          type: integer
+          description: The ID of the user that purchased the resource
     Author:
       type: object
       properties:
