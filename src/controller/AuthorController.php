@@ -15,11 +15,11 @@ class AuthorController
 
     public function getAuthor()
     {
-        if (Req::checkIdParam()) {
-            $author = $this->database->getUser($_GET['id']);
-            if (!is_null($author) && $author !== false) {
-                return new Author($author);
-            }
+        Req::checkIdParam();
+
+        $author = $this->database->getUser(Req::id());
+        if (!is_null($author) && $author !== false) {
+            return new Author($author);
         }
 
         return NULL;
@@ -27,11 +27,11 @@ class AuthorController
 
     public function findAuthor()
     {
-        if (Req::checkNameParam()) {
-            $author = $this->database->findUser($_GET['name']);
-            if (!is_null($author) && $author !== false) {
-                return new Author($author);
-            }
+        Req::checkNameParam();
+
+        $author = $this->database->findUser(Req::name());
+        if (!is_null($author) && $author !== false) {
+            return new Author($author);
         }
 
         return NULL;
