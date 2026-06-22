@@ -91,4 +91,14 @@ class RequestUtil
 
         return NULL;
     }
+
+    public static function order()
+    {
+        return $_GET['order'] ?? null;
+    }
+
+    public static function direction()
+    {
+        return $_GET['direction'] ?? null;
+    }
 }

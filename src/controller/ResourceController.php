@@ -17,7 +17,7 @@ class ResourceController
     {
         $out = [];
 
-        $resources = $this->database->listResources(Req::category(), Req::page());
+        $resources = $this->database->listResources(Req::category(), Req::page(), Req::order(), Req::direction());
 
         if (is_null($resources)) {
             return NULL;
