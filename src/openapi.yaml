@@ -20,6 +20,26 @@ paths:
         required: false
         schema:
           type: integer
+      - name: order
+        description: Field to order the results by
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+           - id
+           - first_release
+           - last_update
+           - download_count
+      - name: direction
+        description: Direction to order the results by
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+            - asc
+            - desc
     get:
       operationId: listResources
       summary: Obtain a list of all resources
@@ -120,6 +140,25 @@ paths:
         required: false
         schema:
           type: integer
+      - name: order
+        description: Field to order the results by
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+            - id
+            - post_date
+            - download_count
+      - name: direction
+        description: Direction to order the results by
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+            - asc
+            - desc
     get:
       operationId: getResourceUpdates
       summary: Obtain all the updates to a resource

@@ -20,10 +20,12 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
 
 #### listResources
 ##### Parameters:
-| name 	    | type 	| required 	| default 	| description                                                                 	|
-|---------- |------	|----------	|---------	|-----------------------------------------------------------------------------	|
-| category  | int  	| no       	| none    	| The resource category to restrict results to (see `listResourceCategories`) 	|
-| page 	    | int  	| no       	| 1       	| The page number to retrieve. Items are paginated at 10 results per page.    	|
+| name 	      | type 	    | required 	| default 	   | description                                                                 	 |
+|-------------|-----------|----------	|-------------|-------------------------------------------------------------------------------|
+| category    | int  	    | no       	| none    	   | The resource category to restrict results to (see `listResourceCategories`) 	 |
+| page 	      | int  	    | no       	| 1       	   | The page number to retrieve. Items are paginated at 10 results per page.    	 |
+| order 	     | string 	 | no       	| id       	  | Field to order the results by.    	                                           |
+| direction 	 | string 	 | no       	| ASC       	 | Direction to order the results by.    	                                       |
 ##### Request: https://api.spigotmc.org/simple/0.2/index.php?action=listResources&category=4&page=2
 ##### Response (truncated):
 ```json
@@ -337,10 +339,12 @@ All requests must currently be sent via **GET** to https://api.spigotmc.org/simp
 
 #### getResourceUpdates
 ##### Parameters:
-| name 	| type 	| required 	| default 	| description                                                                 	|
-|------	|------	|----------	|---------	|-----------------------------------------------------------------------------	|
+| name 	| type 	| required 	| default 	| description                                                                 	 |
+|------	|------	|----------	|---------	|-------------------------------------------------------------------------------|
 | id  	| int  	| yes       | none    	| The id of the resource for which to retrieve updates                          |
-| page 	| int  	| no       	| 1       	| The page number to retrieve. Items are paginated at 10 results per page.    	|
+| page 	| int  	| no       	| 1       	| The page number to retrieve. Items are paginated at 10 results per page.    	 |
+| order 	     | string 	 | no       	| id       	  | Field to order the results by.                                                |
+| direction 	 | string 	 | no       	| ASC       	 | Direction to order the results by.                                            |
 ##### Request: https://api.spigotmc.org/simple/0.2/index.php?action=getResourceUpdates&id=2&page=1
 ##### Response (truncated):
 ```json

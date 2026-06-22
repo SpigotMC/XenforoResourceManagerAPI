@@ -41,13 +41,13 @@ class Database
         );
     }
 
-    public function listResources($category, $page)
+    public function listResources($category, $page, $order = null, $direction = null)
     {
         $page = $page == 1 ? 0 : 10 * ($page - 1);
 
         if (!is_null($this->conn)) {
             $categoryClause = is_null($category) ? '' : 'AND r.resource_category_id = :resource_category_id';
-            $resStmt = $this->_resource($categoryClause, 10, $page);
+            $resStmt = $this->_resource($categoryClause, 10, $page, $order, $direction);
 
             if (!empty($categoryClause)) {
                 $resStmt->bindParam(':resource_category_id', $category);
@@ -140,12 +140,12 @@ class Database
         return NULL;
     }
 
-    public function getResourceUpdates($resource_id, $page)
+    public function getResourceUpdates($resource_id, $page, $order = null, $direction = null)
     {
         $page = $page == 1 ? 0 : 10 * ($page - 1);
 
         if (!is_null($this->conn)) {
-            $updatesStmt = $this->_resource_update('AND r.resource_id = :resource_id', 10, $page);
+            $updatesStmt = $this->_resource_update('AND r.resource_id = :resource_id', 10, $page, $order, $direction);
             $updatesStmt->bindParam(':resource_id', $resource_id);
 
             if ($updatesStmt->execute()) {
@@ -213,8 +213,15 @@ class Database
         return NULL;
     }
 
-    private function _resource($additional_where_clauses, $limit = 1, $offset = null)
+    private function _resource($additional_where_clauses, $limit = 1, $offset = null, $order = null, $direction = null)
     {
+        $orderOptions = [
+            'id' => 'r.resource_id',
+            'first_release' => 'r.resource_date',
+            'last_update' => 'r.last_update',
+            'download_count' => 'r.download_count',
+        ];
+        $orderClause = $this->prepare_order_options($orderOptions, $order, $direction);
         $offsetClause = is_null($offset) ? '' : 'OFFSET :offset';
 
         $query = sprintf(
@@ -228,10 +235,11 @@ class Database
                     ON r.resource_category_id = rc.resource_category_id
             WHERE r.resource_state = 'visible' 
                   %s
-            ORDER BY r.resource_id ASC
+            %s
             LIMIT :limit 
             %s",
             $additional_where_clauses,
+            $orderClause,
             $offsetClause
         );
 
@@ -269,8 +277,14 @@ class Database
         return NULL;
     }
 
-    private function _resource_update($additional_where_clauses, $limit = 1, $offset = null)
+    private function _resource_update($additional_where_clauses, $limit = 1, $offset = null, $order = null, $direction = null)
     {
+        $orderOptions = [
+            'id' => 'r.resource_update_id',
+            'post_date' => 'r.post_date',
+            'download_count' => 'rv.download_count',
+        ];
+        $orderClause = $this->prepare_order_options($orderOptions, $order, $direction);
         $offsetClause = is_null($offset) ? '' : 'OFFSET :offset';
 
         $query = sprintf(
@@ -279,10 +293,11 @@ class Database
                 INNER JOIN xf_resource_version rv ON r.resource_update_id = rv.resource_update_id
             WHERE r.message_state = 'visible' AND rv.version_state = 'visible' 
                 %s
-            ORDER BY r.resource_update_id ASC
+            %s
             LIMIT :limit 
             %s",
             $additional_where_clauses,
+            $orderClause,
             $offsetClause
         );
 
@@ -294,5 +309,18 @@ class Database
         }
 
         return $stmt;
+    }
+
+    private function prepare_order_options($order_options, $order, $direction)
+    {
+        if (!empty($order) && array_key_exists($order, $order_options)) {
+            $column = $order_options[$order];
+        } else {
+            $column = array_shift($order_options);
+        }
+
+        $dir = strtolower($direction) === 'desc' ? 'DESC' : 'ASC';
+
+        return sprintf(' ORDER BY %s %s ', $column, $dir);
     }
 }
