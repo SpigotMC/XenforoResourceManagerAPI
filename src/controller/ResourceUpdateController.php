@@ -30,7 +30,7 @@ class ResourceUpdateController
         $out = [];
 
         if (Req::checkIdParam()) {
-            $updates = $this->database->getResourceUpdates($_GET['id'], Req::page());
+            $updates = $this->database->getResourceUpdates($_GET['id'], Req::page(), Req::order(), Req::direction());
             if (is_null($updates)) return NULL;
 
             foreach ($updates as $update) {
